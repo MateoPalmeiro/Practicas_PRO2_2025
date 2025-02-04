@@ -55,13 +55,13 @@ build CMakeFiles/P0_2025.dir/main.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:
   OBJECT_DIR = CMakeFiles\P0_2025.dir
   OBJECT_FILE_DIR = CMakeFiles\P0_2025.dir
 
-build CMakeFiles/P0_2025.dir/rational_struct.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/rational_struct.c || cmake_object_order_depends_target_P0_2025
+build CMakeFiles/P0_2025.dir/rational_struct.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/rational_struct.c || cmake_object_order_depends_target_P0_2025
   DEP_FILE = CMakeFiles\P0_2025.dir\rational_struct.c.obj.d
   FLAGS = -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\P0_2025.dir
   OBJECT_FILE_DIR = CMakeFiles\P0_2025.dir
 
-build CMakeFiles/P0_2025.dir/rational_pointer.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/rational_pointer.c || cmake_object_order_depends_target_P0_2025
+build CMakeFiles/P0_2025.dir/rational_pointer.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/rational_pointer.c || cmake_object_order_depends_target_P0_2025
   DEP_FILE = CMakeFiles\P0_2025.dir\rational_pointer.c.obj.d
   FLAGS = -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\P0_2025.dir
