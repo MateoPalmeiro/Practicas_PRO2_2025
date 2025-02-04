@@ -1,0 +1,10 @@
+# Archivos binarios y de compilación
+/cmake-build-*/
+*.o
+*.exe
+*.out
+*.a
+*.so
+
+# Archivos de configuración de CLion
+.idea/
