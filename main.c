@@ -6,10 +6,14 @@ AUTHOR 2:
 GROUP: 1.2 DATE: 04/02/2025
 */
 
+// descomenta la siguiente linea para usar el modo con estructura
+// #define STRUCT_MODE
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef STRUCT
+// incluir el fichero de cabecera segun el modo seleccionado
+#ifdef STRUCT_MODE
 #include "rational_struct.h"
 #else
 #include "rational_pointer.h"
@@ -20,8 +24,8 @@ int main(void) {
     int n1 = 1, d1 = 2;
     int n2 = 3, d2 = 4;
 
-#ifdef STRUCT
-    // version con estructura (paso por valor)
+#ifdef STRUCT_MODE
+    // modo con estructura (paso por valor)
     Rational r1 = createRational(n1, d1);
     Rational r2 = createRational(n2, d2);
     Rational suma = sum(r1, r2);
@@ -31,7 +35,7 @@ int main(void) {
     printf("racional 2: %d/%d\n", numerator(r2), denominator(r2));
     printf("suma: %d/%d\n", numerator(suma), denominator(suma));
 #else
-    // version con punteros (memoria dinamica)
+    // modo con punteros (memoria dinamica)
     Rational *r1 = createRational(n1, d1);
     Rational *r2 = createRational(n2, d2);
     Rational *suma = sum(r1, r2);
