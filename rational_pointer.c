@@ -2,7 +2,7 @@
 TITLE: PROGRAMMING II LABS
 SUBTITLE: Practical P0 (rational_pointer)
 AUTHOR 1: Mateo Palmeiro Muniz           LOGIN 1: mateo.palmeiro@udc.es
-AUTHOR 2:
+AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
 GROUP: 1.2 DATE: 04/02/2025
 */
 
