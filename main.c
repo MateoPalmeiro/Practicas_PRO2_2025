@@ -6,8 +6,8 @@ AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
 GROUP: 1.2 DATE: 10/02/2025
 */
 
-// descomenta la siguiente linea para usar el modo con estructura
-// #define STRUCT_MODE
+// la definicion de struct_mode se realiza globalmente en cmake (mediante add_definitions),
+// por lo que no es necesario definirla aqui.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,7 +25,7 @@ int main(void) {
     int n2 = 3, d2 = 4;
 
 #ifdef STRUCT_MODE
-    // modo con estructura (paso por valor)
+    // modo con estructuras (paso por valor)
     Rational r1 = createRational(n1, d1);
     Rational r2 = createRational(n2, d2);
     Rational suma = sum(r1, r2);
