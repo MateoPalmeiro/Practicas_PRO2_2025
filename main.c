@@ -21,8 +21,8 @@ GROUP: 1.2 DATE: 10/02/2025
 
 int main(void) {
     // definir dos numeros racionales con valores de ejemplo
-    int n1 = 1, d1 = 2;
-    int n2 = 3, d2 = 4;
+    int n1 = 1134903170, d1 = 1836311903;
+    int n2 = 433494437, d2 = 701408733;
 
 #ifdef STRUCT_MODE
     // modo con estructuras (paso por valor)

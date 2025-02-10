@@ -50,13 +50,15 @@ cmake_ninja_workdir = C$:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-deb
 build cmake_object_order_depends_target_P0_2025: phony || CMakeFiles/P0_2025.dir
 
 build CMakeFiles/P0_2025.dir/main.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/main.c || cmake_object_order_depends_target_P0_2025
+  DEFINES = -DSTRUCT_MODE
   DEP_FILE = CMakeFiles\P0_2025.dir\main.c.obj.d
   FLAGS = -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\P0_2025.dir
   OBJECT_FILE_DIR = CMakeFiles\P0_2025.dir
 
-build CMakeFiles/P0_2025.dir/rational_pointer.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/rational_pointer.c || cmake_object_order_depends_target_P0_2025
-  DEP_FILE = CMakeFiles\P0_2025.dir\rational_pointer.c.obj.d
+build CMakeFiles/P0_2025.dir/rational_struct.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/rational_struct.c || cmake_object_order_depends_target_P0_2025
+  DEFINES = -DSTRUCT_MODE
+  DEP_FILE = CMakeFiles\P0_2025.dir\rational_struct.c.obj.d
   FLAGS = -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\P0_2025.dir
   OBJECT_FILE_DIR = CMakeFiles\P0_2025.dir
@@ -69,7 +71,7 @@ build CMakeFiles/P0_2025.dir/rational_pointer.c.obj: C_COMPILER__P0_2025_unscann
 #############################################
 # Link the executable P0_2025.exe
 
-build P0_2025.exe: C_EXECUTABLE_LINKER__P0_2025_Debug CMakeFiles/P0_2025.dir/main.c.obj CMakeFiles/P0_2025.dir/rational_pointer.c.obj
+build P0_2025.exe: C_EXECUTABLE_LINKER__P0_2025_Debug CMakeFiles/P0_2025.dir/main.c.obj CMakeFiles/P0_2025.dir/rational_struct.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\P0_2025.dir

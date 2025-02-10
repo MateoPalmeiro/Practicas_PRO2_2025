@@ -12,7 +12,7 @@ set(CMAKE_C_STANDARD 99)
 # Si la línea permanece comentada, se compilará en modo "punteros"
 # (se usará rational_pointer.c)
 # ==================================================================
-# set(USE_STRUCT_MODE ON)
+ set(USE_STRUCT_MODE ON)
 
 if(DEFINED USE_STRUCT_MODE)
     add_definitions(-DSTRUCT_MODE)
