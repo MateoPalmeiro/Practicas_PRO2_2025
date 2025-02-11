@@ -1,6 +1,7 @@
 # Archivos binarios y de compilación
 /cmake-build-*/
 *.o
+*.obj
 *.exe
 *.out
 *.a
@@ -14,12 +15,29 @@ CMakeFiles/
 Makefile
 cmake_install.cmake
 
-# Archivos de configuración de CLion
+# Archivos de configuración de CLion y JetBrains
 .idea/
 *.iml
+*.ipr
+*.iws
+
+# Archivos generados por CLion/CMake
+build/
+cmake-build-debug/
+cmake-build-release/
+cmake-build-*/  # Ignorar cualquier carpeta de build creada por CMake
 
 # Archivos de logs y temporales
 *.log
 *.tmp
 *.swp
 *~
+.DS_Store  # Archivos de macOS innecesarios
+Thumbs.db  # Archivos de Windows innecesarios
+
+# Archivos de compilación intermedia y otros IDEs
+*.vcxproj*
+*.sln
+*.ncb
+*.pdb
+*.idb
