@@ -1,5 +1,0 @@
-C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/P0/CMakeFiles/P0_2025.dir
-C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/P0/CMakeFiles/edit_cache.dir
-C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/P0/CMakeFiles/rebuild_cache.dir
