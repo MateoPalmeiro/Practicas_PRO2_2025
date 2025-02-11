@@ -4,13 +4,13 @@ project(P0_2025 C)
 set(CMAKE_C_STANDARD 99)
 
 # ==================================================================
-# Para seleccionar el modo, comenta o descomenta la siguiente línea:
+# para seleccionar el modo, comenta o descomenta la siguiente línea:
 #
-# Si descomentas la siguiente línea, se compilará en modo "struct"
-# (es decir, se usará rational_struct.c y se definirá la macro STRUCT_MODE)
+# si descomentas la siguiente linea, se compilara en modo "struct"
+# (es decir, se usara rational_struct.c y se definira la macro STRUCT_MODE)
 #
-# Si la línea permanece comentada, se compilará en modo "punteros"
-# (se usará rational_pointer.c)
+# Si la linea permanece comentada, se compilara en modo "punteros"
+# (se usara rational_pointer.c)
 # ==================================================================
 set(USE_STRUCT_MODE ON)
 
