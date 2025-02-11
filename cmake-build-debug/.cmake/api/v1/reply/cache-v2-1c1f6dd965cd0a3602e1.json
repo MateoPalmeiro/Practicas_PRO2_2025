@@ -543,7 +543,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/JetBrains/CLion 2023.3.2/bin/ninja/win/x64/ninja.exe"
+			"value" : "C:/PROGRA~1/JETBRA~1/CLION2~1.2/bin/ninja/win/x64/ninja.exe"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -651,7 +651,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "1"
+			"value" : "2"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -731,7 +731,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "P0_2025"
+			"value" : "Practicas_PRO2_2025"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1135,7 +1135,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug"
+			"value" : "C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/P0"
 		},
 		{
 			"name" : "P0_2025_IS_TOP_LEVEL",
@@ -1147,10 +1147,46 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "ON"
+			"value" : "OFF"
 		},
 		{
 			"name" : "P0_2025_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/palme/CLionProjects/Pro2/P0_2025/P0"
+		},
+		{
+			"name" : "Practicas_PRO2_2025_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug"
+		},
+		{
+			"name" : "Practicas_PRO2_2025_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "Practicas_PRO2_2025_SOURCE_DIR",
 			"properties" : 
 			[
 				{

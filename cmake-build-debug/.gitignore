@@ -5,6 +5,21 @@
 *.out
 *.a
 *.so
+*.bin
+*.elf
+
+# Archivos de depuración y configuración de CMake
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
 
 # Archivos de configuración de CLion
 .idea/
+*.iml
+
+# Archivos de logs y temporales
+*.log
+*.tmp
+*.swp
+*~

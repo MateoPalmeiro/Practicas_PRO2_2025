@@ -105,6 +105,9 @@
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "C:/Program Files/JetBrains/CLion 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"path" : "P0/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",
