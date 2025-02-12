@@ -133,11 +133,129 @@ build P0/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 build P0/rebuild_cache: phony P0/CMakeFiles/rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# C:/Users/palme/CLionProjects/Pro2/P0_2025/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target main
+
+
+#############################################
+# Order-only phony target for main
+
+build cmake_object_order_depends_target_main: phony || P1/CMakeFiles/main.dir
+
+build P1/CMakeFiles/main.dir/main.c.obj: C_COMPILER__main_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/P1/main.c || cmake_object_order_depends_target_main
+  DEFINES = -DINPUT_FILE=\"new.txt\" -DSTATIC_LIST
+  DEP_FILE = P1\CMakeFiles\main.dir\main.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always -Wall -Wextra
+  OBJECT_DIR = P1\CMakeFiles\main.dir
+  OBJECT_FILE_DIR = P1\CMakeFiles\main.dir
+
+build P1/CMakeFiles/main.dir/static_list.c.obj: C_COMPILER__main_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/P1/static_list.c || cmake_object_order_depends_target_main
+  DEFINES = -DINPUT_FILE=\"new.txt\" -DSTATIC_LIST
+  DEP_FILE = P1\CMakeFiles\main.dir\static_list.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always -Wall -Wextra
+  OBJECT_DIR = P1\CMakeFiles\main.dir
+  OBJECT_FILE_DIR = P1\CMakeFiles\main.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target main
+
+
+#############################################
+# Link the executable C:\Users\palme\CLionProjects\Pro2\P0_2025\bin\main.exe
+
+build C$:/Users/palme/CLionProjects/Pro2/P0_2025/bin/main.exe: C_EXECUTABLE_LINKER__main_Debug P1/CMakeFiles/main.dir/main.c.obj P1/CMakeFiles/main.dir/static_list.c.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = P1\CMakeFiles\main.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = C:\Users\palme\CLionProjects\Pro2\P0_2025\bin\main.exe
+  TARGET_IMPLIB = P1\libmain.dll.a
+  TARGET_PDB = main.exe.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target test_lists
+
+
+#############################################
+# Order-only phony target for test_lists
+
+build cmake_object_order_depends_target_test_lists: phony || P1/CMakeFiles/test_lists.dir
+
+build P1/CMakeFiles/test_lists.dir/test.c.obj: C_COMPILER__test_lists_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/P1/test.c || cmake_object_order_depends_target_test_lists
+  DEFINES = -DINPUT_FILE=\"new.txt\" -DSTATIC_LIST
+  DEP_FILE = P1\CMakeFiles\test_lists.dir\test.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always -Wall -Wextra
+  OBJECT_DIR = P1\CMakeFiles\test_lists.dir
+  OBJECT_FILE_DIR = P1\CMakeFiles\test_lists.dir
+
+build P1/CMakeFiles/test_lists.dir/static_list.c.obj: C_COMPILER__test_lists_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/P1/static_list.c || cmake_object_order_depends_target_test_lists
+  DEFINES = -DINPUT_FILE=\"new.txt\" -DSTATIC_LIST
+  DEP_FILE = P1\CMakeFiles\test_lists.dir\static_list.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always -Wall -Wextra
+  OBJECT_DIR = P1\CMakeFiles\test_lists.dir
+  OBJECT_FILE_DIR = P1\CMakeFiles\test_lists.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_lists
+
+
+#############################################
+# Link the executable C:\Users\palme\CLionProjects\Pro2\P0_2025\bin\test_lists.exe
+
+build C$:/Users/palme/CLionProjects/Pro2/P0_2025/bin/test_lists.exe: C_EXECUTABLE_LINKER__test_lists_Debug P1/CMakeFiles/test_lists.dir/test.c.obj P1/CMakeFiles/test_lists.dir/static_list.c.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = P1\CMakeFiles\test_lists.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = C:\Users\palme\CLionProjects\Pro2\P0_2025\bin\test_lists.exe
+  TARGET_IMPLIB = P1\libtest_lists.dll.a
+  TARGET_PDB = test_lists.exe.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build P1/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\palme\CLionProjects\Pro2\P0_2025\cmake-build-debug\P1 && "C:\Program Files\JetBrains\CLion 2023.3.2\bin\cmake\win\x64\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build P1/edit_cache: phony P1/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build P1/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\palme\CLionProjects\Pro2\P0_2025\cmake-build-debug\P1 && "C:\Program Files\JetBrains\CLion 2023.3.2\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SC:\Users\palme\CLionProjects\Pro2\P0_2025 -BC:\Users\palme\CLionProjects\Pro2\P0_2025\cmake-build-debug"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build P1/rebuild_cache: phony P1/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
 
 build P0_2025: phony P0/P0_2025.exe
 
 build P0_2025.exe: phony P0/P0_2025.exe
+
+build main: phony C$:/Users/palme/CLionProjects/Pro2/P0_2025/bin/main.exe
+
+build main.exe: phony C$:/Users/palme/CLionProjects/Pro2/P0_2025/bin/main.exe
+
+build test_lists: phony C$:/Users/palme/CLionProjects/Pro2/P0_2025/bin/test_lists.exe
+
+build test_lists.exe: phony C$:/Users/palme/CLionProjects/Pro2/P0_2025/bin/test_lists.exe
 
 # =============================================================================
 # Folder targets.
@@ -147,7 +265,7 @@ build P0_2025.exe: phony P0/P0_2025.exe
 #############################################
 # Folder: C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug
 
-build all: phony P0/all
+build all: phony P0/all P1/all
 
 # =============================================================================
 
@@ -157,20 +275,27 @@ build all: phony P0/all
 build P0/all: phony P0/P0_2025.exe
 
 # =============================================================================
+
+#############################################
+# Folder: C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/P1
+
+build P1/all: phony C$:/Users/palme/CLionProjects/Pro2/P0_2025/bin/main.exe C$:/Users/palme/CLionProjects/Pro2/P0_2025/bin/test_lists.exe
+
+# =============================================================================
 # Built-in targets
 
 
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeRCInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake C$:/Users/palme/CLionProjects/Pro2/P0_2025/CMakeLists.txt C$:/Users/palme/CLionProjects/Pro2/P0_2025/P0/CMakeLists.txt CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeRCCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeRCInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake C$:/Users/palme/CLionProjects/Pro2/P0_2025/CMakeLists.txt C$:/Users/palme/CLionProjects/Pro2/P0_2025/P0/CMakeLists.txt C$:/Users/palme/CLionProjects/Pro2/P0_2025/P1/CMakeLists.txt C$:/Users/palme/CLionProjects/Pro2/P0_2025/P1/config.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeRCCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeRCInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake C$:/Users/palme/CLionProjects/Pro2/P0_2025/CMakeLists.txt C$:/Users/palme/CLionProjects/Pro2/P0_2025/P0/CMakeLists.txt CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeRCCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake: phony
+build C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeRCInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows.cmake C$:/Program$ Files/JetBrains/CLion$ 2023.3.2/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake C$:/Users/palme/CLionProjects/Pro2/P0_2025/CMakeLists.txt C$:/Users/palme/CLionProjects/Pro2/P0_2025/P0/CMakeLists.txt C$:/Users/palme/CLionProjects/Pro2/P0_2025/P1/CMakeLists.txt C$:/Users/palme/CLionProjects/Pro2/P0_2025/P1/config.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeRCCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake: phony
 
 
 #############################################

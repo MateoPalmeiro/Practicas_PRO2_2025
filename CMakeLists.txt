@@ -5,3 +5,4 @@ set(CMAKE_C_STANDARD 99)
 
 # agregar cada practica como subdirectorio
 add_subdirectory(P0)
+add_subdirectory(P1)

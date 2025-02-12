@@ -651,7 +651,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "2"
+			"value" : "3"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -1160,6 +1160,42 @@
 			],
 			"type" : "STATIC",
 			"value" : "C:/Users/palme/CLionProjects/Pro2/P0_2025/P0"
+		},
+		{
+			"name" : "P1_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/palme/CLionProjects/Pro2/P0_2025/cmake-build-debug/P1"
+		},
+		{
+			"name" : "P1_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "OFF"
+		},
+		{
+			"name" : "P1_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/palme/CLionProjects/Pro2/P0_2025/P1"
 		},
 		{
 			"name" : "Practicas_PRO2_2025_BINARY_DIR",

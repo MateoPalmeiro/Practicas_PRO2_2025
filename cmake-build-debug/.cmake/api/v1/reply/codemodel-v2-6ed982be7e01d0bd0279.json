@@ -8,7 +8,8 @@
 					"build" : ".",
 					"childIndexes" : 
 					[
-						1
+						1,
+						2
 					],
 					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
@@ -32,6 +33,22 @@
 					[
 						0
 					]
+				},
+				{
+					"build" : "P1",
+					"jsonFile" : "directory-P1-Debug-56c3260a36f958e14fde.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "P1",
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
 				}
 			],
 			"name" : "Debug",
@@ -40,7 +57,8 @@
 				{
 					"childIndexes" : 
 					[
-						1
+						1,
+						2
 					],
 					"directoryIndexes" : 
 					[
@@ -59,6 +77,19 @@
 					[
 						0
 					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "P1",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
 				}
 			],
 			"targets" : 
@@ -69,6 +100,20 @@
 					"jsonFile" : "target-P0_2025-Debug-0cca2b5c043a9502ace8.json",
 					"name" : "P0_2025",
 					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "main::@5896a431b470e524a515",
+					"jsonFile" : "target-main-Debug-fc7b2aa3d0a60428bdb1.json",
+					"name" : "main",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "test_lists::@5896a431b470e524a515",
+					"jsonFile" : "target-test_lists-Debug-50ac715eed5d82c9aa89.json",
+					"name" : "test_lists",
+					"projectIndex" : 2
 				}
 			]
 		}

@@ -108,6 +108,12 @@
 		},
 		{
 			"path" : "P0/CMakeLists.txt"
+		},
+		{
+			"path" : "P1/CMakeLists.txt"
+		},
+		{
+			"path" : "P1/config.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",
