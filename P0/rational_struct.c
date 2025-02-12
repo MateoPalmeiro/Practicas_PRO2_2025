@@ -11,10 +11,10 @@ GROUP: 1.2 DATE: 04/02/2025
 #include "rational_struct.h"
 
 // funcion auxiliar para calcular el maximo comun divisor (mcd)
-static int gcd(int a, int b) {
+static int mcd(int a, int b) {
     if (b == 0)
         return a;
-    return gcd(b, a % b);
+    return mcd(b, a % b);
 }
 
 // crea un numero racional y simplifica la fraccion
@@ -29,7 +29,7 @@ Rational createRational(int n, int d) {
         d = -d;
     }
     // calcular el mcd para simplificar la fraccion
-    int divisor = gcd((n < 0) ? -n : n, (d < 0) ? -d : d);
+    int divisor = mcd((n < 0) ? -n : n, (d < 0) ? -d : d);
     Rational r;
     r.num = n / divisor;
     r.den = d / divisor;
