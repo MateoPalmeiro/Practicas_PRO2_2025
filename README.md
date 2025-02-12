@@ -3,125 +3,127 @@
 ## Descripción General
 
 Este repositorio contiene las prácticas desarrolladas para la asignatura **Programación II** (Curso 2024/25) de la Facultad de Informática. Cada práctica se organiza en un subdirectorio propio y se compila utilizando **CMake**.  
-Actualmente, se encuentra disponible la **Práctica 0 (P0)**, cuyo objetivo es aprender a utilizar ficheros de cabecera (.h) y organizar el código en módulos en C, centrándose en el manejo de números racionales.
+Actualmente se encuentran disponibles las Prácticas 0 y 1, cuyo objetivo es aprender a modularizar el código en C mediante el uso de ficheros de cabecera y el desarrollo de Tipos Abstractos de Datos (TADs).
+- La **Práctica 0 (P0)** se centra en el manejo de números racionales, implementado en dos versiones (estructuras y punteros).
+- La **Práctica 1 (P1)** consiste en desarrollar una plataforma de subastas de consolas retro. Se debe diseñar un TAD Lista NO ORDENADA que gestione las consolas (altas, bajas y modificaciones de precio) y se implementa en dos versiones: estática y dinámica.
 
 ## Estructura del Repositorio
 
-- **CMakeLists.txt (raíz):**  
-  Archivo de configuración principal que agrega cada práctica como subdirectorio.  
-  Actualmente, se agrega el subdirectorio `P0`.
-
-- **Subdirectorios de prácticas:**
-  - **P0:**
-    - `main.c`
-    - `rational_struct.c` y `rational_struct.h`
-    - `rational_pointer.c` y `rational_pointer.h`
-    - `CMakeLists.txt` específico para la práctica P0.
-
-- **.gitignore:**  
-  Se han definido reglas para ignorar archivos y directorios generados durante la compilación y depuración (por ejemplo, carpetas de build, binarios, logs, etc.).
+La estructura del repositorio se organiza de la siguiente manera:
+- **.idea/**  
+  Configuraciones del IDE (no se suben al repositorio).
+- **P0/**  
+  Código fuente de la Práctica 0 (incluye main.c, rational_struct.c/h, rational_pointer.c/h, CMakeLists.txt de P0).
+- **P1/**  
+  Código fuente de la Práctica 1 (incluye main.c, test.c, types.h, static_list.c/h, dynamic_list.c/h, CMakeLists.txt de P1 y config.cmake).
+- **bin/**  
+  Ficheros de entrada (txt) y los ejecutables generados, especialmente para la Práctica 1.
+- **cmake-build-debug/**  
+  Carpeta generada por CLion para la compilación.
+- **script_minimos/**  
+  Carpeta que contiene los ficheros de entrada para el programa principal de la Práctica 1 (por ejemplo, new.txt, bid.txt, delete.txt y sus salidas de referencia).
+- **script_test/**  
+  Carpeta que contiene los ficheros de entrada y salida esperada para probar los TADs de la Práctica 1.
+- **.gitignore**  
+  Archivo que excluye archivos y carpetas generados (por ejemplo, .idea, cmake-build-debug, etc.).
+- **CMakeLists.txt (raíz)**  
+  Archivo maestro que agrega los subdirectorios de las prácticas.
+- **README.md**  
+  Este documento.
+- **script.sh**  
+  Script para compilar y ejecutar las pruebas de la Práctica 1.
 
 ## Práctica 0 (P0) – Manejo de Números Racionales
 
 ### Objetivo
 
-La práctica P0 tiene como objetivo aprender a:
-- Utilizar ficheros de cabecera (.h).
-- Organizar el código en módulos en C.
-
-Se implementa el manejo de números racionales a través de dos versiones:
-
-- **rational_struct:**  
-  Implementación basada en estructuras (paso por valor).
-
-- **rational_pointer:**  
-  Implementación basada en punteros (uso de memoria dinámica).
-
-El programa principal (`main.c`) crea y suma dos números racionales utilizando las funciones definidas en ambos módulos.
+Aprender a:
+- Utilizar ficheros de cabecera (.h) y modularizar el código en C.
+- Implementar y organizar el código en módulos (estructuras y punteros).
+- Desarrollar operaciones con números racionales (crear, sumar, etc.).
 
 ### Requisitos del Enunciado
 
-- **Implementaciones:**  
-  Se deben desarrollar dos versiones del código:
-  1. Implementación con estructura (`rational_struct`).
-  2. Implementación con punteros (`rational_pointer`).
+- Implementar dos versiones:
+  1. Con estructura (rational_struct).
+  2. Con punteros (rational_pointer).
+- Ficheros a entregar: `main.c`, `rational_struct.c` y `.h`, `rational_pointer.c` y `.h`.
+- Incluir encabezados con la información de los autores, grupo y fecha.
 
-- **Funciones obligatorias:**
-  - `Rational createRational(int n, int d)`: Crea un número racional a partir de un numerador `n` y un denominador `d`.
-  - `int numerator(Rational r)`: Devuelve el numerador del número racional.
-  - `int denominator(Rational r)`: Devuelve el denominador del número racional.
-  - `Rational sum(Rational r1, Rational r2)`: Suma dos números racionales.
+## Práctica 1 (P1) – Plataforma de Subastas de Consolas Retro
 
-- **Normas de presentación:**
-  - Cada fichero debe incluir un encabezado con la información de los autores, grupo y fecha.
-  - Los nombres de los ficheros deben coincidir exactamente con los indicados en el enunciado.
-  - Los ficheros a entregar son: `main.c`, `rational_struct.c`, `rational_struct.h`, `rational_pointer.c` y `rational_pointer.h`.
+### Objetivo
 
-## Normas de Entrega y Evaluación
+El problema consiste en implementar funcionalidades para una plataforma de subastas de consolas retro. Se debe diseñar una estructura de datos que almacene la información asociada a cada consola y, a partir de ello, implementar un TAD Lista NO ORDENADA (en dos versiones: estática y dinámica) para gestionar las consolas.  
+El programa principal debe procesar las siguientes operaciones, leídas desde un fichero de entrada:
+- **N (New):** Alta de una nueva consola. Formato:  
+  `N consoleId userId brand price`
+- **D (Delete):** Baja de una consola. Formato:  
+  `D consoleId`
+- **B (Bid):** Puja sobre una consola. Formato:  
+  `B consoleId userId price`
+- **S (Stats):** Listado de consolas y estadisticas. Formato:  
+  `S`
 
-### Normas Generales de la Asignatura
+Cada operacion debe mostrar una cabecera de 20 asteriscos y el mensaje de salida en un formato exacto, tal como se especifica en los pdfs.
 
-- El código debe ser compilable en gcc en el servidor de referencia.
-- No se deben utilizar variables globales.
-- El código debe estar organizado en módulos, funciones y procedimientos, incluyendo comentarios adecuados, indentación correcta y el uso de identificadores significativos.
-- Se valorará la eficacia, eficiencia, control de errores, claridad y modularidad.
-- Las prácticas incluirán entregas parciales evaluadas de forma automática; no presentarlas o no superarlas conllevará penalizaciones en la nota final.
+### Fases de la Practica
 
-### Normas Específicas de la Práctica P0
+#### Fase 1 – Implementacion del TAD
+- **Libreria Types:**  
+  Se definen los tipos necesarios:
+  - `NAME_LENGTH_LIMIT`, `tUserId`, `tConsoleId`, `tConsoleBrand`, `tConsolePrice`, `tBidCounter` y `tItemL`.
+- **TAD Lista:**  
+  Implementar dos versiones de la lista NO ORDENADA:
+  - **Estatica:** Con array de tamaño máximo 25 y `tPosL` como entero (LNULL = -1).
+  - **Dinamica:** Lista enlazada simple, con `tPosL` como puntero y LNULL = NULL.
+- Se prueba el TAD con el fichero `test.c` incluido.
 
-- **Entrega:**
-  - **Plazos y forma de entrega:**
-    - La entrega se realizará en el enlace designado del Campus Virtual.
-    - Es obligatorio realizar la entrega en pareja; sin embargo, un único miembro del equipo debe subir todos los ficheros.
-    - La entrega de la práctica P0 es obligatoria. No se admitirán entregas fuera de plazo, y el incumplimiento de esta norma se penalizará (por ejemplo, la práctica se considerará **NO PRESENTADA**).
+#### Fase 2 – Programa Principal
+- El programa (`main.c`) debe leer un fichero de entrada con las peticiones numeradas y procesarlas:
+  - Imprimir cabeceras de operacion (20 asteriscos, luego el mensaje).
+  - Para la operacion New, debe dar error si ya existe la consola o si la marca no es "nintendo" o "sega".
+  - Para Delete, Bid y Stats, mostrar la salida exacta según el enunciado (incluyendo formato de tabla en Stats).
 
-  - **Ficheros a entregar:**
-    - `main.c`
-    - `rational_struct.c` y `rational_struct.h`
-    - `rational_pointer.c` y `rational_pointer.h`
+### Requisitos de Entrega y Evaluacion
+- El proyecto debe compilar sin errores en gcc en el servidor de referencia.
+- No se deben usar variables globales (salvo para la lista si se justifica).
+- El código debe estar debidamente comentado y estructurado.
+- Las salidas del programa deben coincidir exactamente con las de referencia.
+- Se realizaran entregas parciales y una entrega final; en cada entrega se evaluara el correcto funcionamiento del TAD y el programa principal.
 
-  - **Encabezados en los ficheros:**
-    - Cada archivo debe incluir un encabezado con la siguiente información:
-      ```
-      TITLE: PROGRAMMING II LABS
-      SUBTITLE: Practical P0
-      AUTHOR 1: [Nombre completo]           LOGIN 1: [login/email]
-      AUTHOR 2: [Nombre completo]           LOGIN 2: [login/email]
-      GROUP: [grupo]   DATE: [dd/mm/aaaa]
-      ```
+## Configuracion y Compilacion
 
-- **Aspectos Evaluables:**
-  - **Criterios Mínimos:**
-    - La práctica debe ser compilable en gcc en el servidor de referencia.
-    - El código no debe contener variables globales.
-    - La estructura del código debe estar organizada en procedimientos y/o funciones (al menos una función/procedimiento por cada operación del programa principal).
-    - Es obligatorio incluir comentarios claros y concisos, buena indentación y uso de identificadores significativos.
+El proyecto utiliza **CMake** y compila con el estandar **C99**.  
+Cada practica tiene su propio CMakeLists.txt y config.cmake para seleccionar la implementacion (estatica o dinamica) y el fichero de entrada para main.
 
-  - **Otros Criterios de Evaluación:**
-    - **Eficacia:** Se evaluará el cumplimiento correcto de las especificaciones, con la implementación adecuada de todas las funcionalidades.
-    - **Eficiencia:** Se valorará que el código evite operaciones o procesos innecesarios y que utilice algoritmos eficientes.
-    - **Control de errores:** Se debe realizar un control exhaustivo de los posibles errores de ejecución (por ejemplo, control de errores en la asignación de memoria, manejo de denominadores nulos, etc.).
-    - **Claridad y Modularidad:** Se valorará la claridad del código, la correcta organización modular y la reutilización de módulos.
-    - **Seguimiento de la práctica:** La práctica incluirá entregas parciales a lo largo del desarrollo, las cuales serán evaluadas de forma automática. No presentar o no superar estas entregas parciales conllevará penalizaciones en la nota final.
+- **P0:** Se compila con la variable `USE_STRUCT_MODE` para seleccionar la implementacion.
+- **P1:** En el archivo config.cmake se debe elegir entre STATIC y DYNAMIC, y el fichero de entrada (por ejemplo, new.txt, bid.txt, delete.txt).
 
-## Configuración y Compilación
+El script `script.sh` y las carpetas `script_minimos` y `script_test` permiten probar la practica de forma automatizada, comparando la salida del programa con los ficheros de referencia.
 
-El proyecto utiliza **CMake** y está configurado para compilar con el estándar **C99**.  
-En el subdirectorio `P0`, el archivo `CMakeLists.txt` permite compilar la práctica en dos modos mediante la variable `USE_STRUCT_MODE`:
+## Ejecucion del Script
 
-- **Modo Struct:**
-  - Se define la macro `STRUCT_MODE` mediante la línea `set(USE_STRUCT_MODE ON)` en el CMakeLists.txt.
-  - Se utiliza el fichero `rational_struct.c`.
+Para ejecutar la practica P1 en la maquina de referencia o localmente:
+1. Asegurate de que en la carpeta raíz del proyecto se encuentre la carpeta P1, junto con bin, script_minimos, script_test, script.sh, CMakeLists.txt y config.cmake.
+2. Desde una terminal en la carpeta raíz, otorga permisos de ejecucion al script:
+   ```bash
+   chmod u+x script.sh
+3. Ejecuta el script con la opcion deseada:
+  - Para ejecutar el programa principal:
+    ```bash
+    ./script.sh -p main
+    ```
+  - Para ejecutar el programa de test:
+    ```bash
+    ./script.sh -p test
+    ```
 
-- **Modo Punteros:**
-  - Si se comenta o elimina la definición de `USE_STRUCT_MODE`, se compila en modo punteros.
-  - Se utiliza el fichero `rational_pointer.c`.
-
-## Autores e Información Adicional
+## Autores e Informacion Adicional
 
 - **Mateo Palmeiro Muniz**  
   *Email:* [mateo.palmeiro@udc.es](mailto:mateo.palmeiro@udc.es)  
-  **Acerca de Mateo:**
+  **Acerca de Mateo:**  
 
 - **Nicolas Otero Costa**  
   *Email:* [nicolas.otero1@udc.es](mailto:nicolas.otero1@udc.es)  
