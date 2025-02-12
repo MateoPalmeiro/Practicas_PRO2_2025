@@ -1,19 +1,19 @@
 # ninja log v5
+2	87	7610591406967520	P1/CMakeFiles/test_lists.dir/test.c.obj	ac06fbb1cf6ee7d1
 21	96	7609199750756748	CMakeFiles/P0_2025.dir/main.c.obj	aecd9eac72bc5fbf
 55	164	7609188748833212	CMakeFiles/P0_2025.dir/rational_pointer.c.obj	99c26baba1a474bb
+29	128	7609196634326358	CMakeFiles/P0_2025.dir/rational_struct.c.obj	2d19067b26d45d84
+34	337	7610985076871599	build.ninja	c00ea1658a08771a
 23	297	7610572279530296	P0/CMakeFiles/P0_2025.dir/main.c.obj	b7f8bab0e020ecef
 96	186	7609199751607470	P0_2025.exe	ecfa692ef2224fcb
-34	337	7610591125606586	build.ninja	c00ea1658a08771a
-29	128	7609196634326358	CMakeFiles/P0_2025.dir/rational_struct.c.obj	2d19067b26d45d84
 27	298	7610572279540302	P0/CMakeFiles/P0_2025.dir/rational_struct.c.obj	bd98e4062d78ae81
 298	532	7610572281844163	P0/P0_2025.exe	1a22a190dc36b2f8
-15	80	7610577732909708	P1/CMakeFiles/test_lists.dir/static_list.c.obj	f992c3e8c0d1ece5
-8	82	7610577732919761	P1/CMakeFiles/main.dir/static_list.c.obj	95e592e02743df6f
-5	125	7610577733365408	P1/CMakeFiles/main.dir/main.c.obj	c64fcb1f0f84fa81
 7	82	7610591406917508	P1/CMakeFiles/test_lists.dir/static_list.c.obj	f992c3e8c0d1ece5
-2	87	7610591406967520	P1/CMakeFiles/test_lists.dir/test.c.obj	ac06fbb1cf6ee7d1
-87	178	7610591407842921	C:/Users/palme/CLionProjects/Pro2/P0_2025/bin/test_lists.exe	56681925c34f41fa
 8	77	7610591471615847	P1/CMakeFiles/main.dir/static_list.c.obj	95e592e02743df6f
 4	95	7610591471810999	P1/CMakeFiles/main.dir/main.c.obj	c64fcb1f0f84fa81
-96	173	7610591472558517	C:/Users/palme/CLionProjects/Pro2/P0_2025/bin/main.exe	3570ee678ad49064
+87	178	7610591407842921	C:/Users/palme/CLionProjects/Pro2/P0_2025/bin/test_lists.exe	56681925c34f41fa
 66	239	7610892241179043	C:/Users/palme/CLionProjects/Pro2/P0_2025/bin/main.exe	3570ee678ad49064
+51	625	7610985076871599	build.ninja	c00ea1658a08771a
+34	223	7610985080241607	P1/CMakeFiles/main.dir/main.c.obj	c64fcb1f0f84fa81
+224	484	7610985082811589	C:/Users/palme/CLionProjects/Pro2/P0_2025/bin/main.exe	3570ee678ad49064
+37	298	7610985690134836	C:/Users/palme/CLionProjects/Pro2/P0_2025/bin/main.exe	3570ee678ad49064
