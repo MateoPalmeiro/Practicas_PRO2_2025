@@ -193,7 +193,7 @@ void readTasks(char *filename) {
 }
 
 int main(int nargs, char **args) {
-    char *file_name = bid.txt";
+    char *file_name = "bid.txt";
     if (nargs > 1) {
         file_name = args[1];
     } else {
