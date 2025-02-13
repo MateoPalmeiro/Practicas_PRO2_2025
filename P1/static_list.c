@@ -25,7 +25,7 @@ void createEmptyList(tList *list) {
  * post: devuelve true si count es 0, false en otro caso.
  */
 bool isEmptyList(tList list) {
-    // se retorna true si el contador es igual a cero, lo que significa que la lista no contiene elementos
+    // se devuelve true si el contador es igual a cero, lo que significa que la lista no contiene elementos
     return (list.count == 0);
 }
 
@@ -45,7 +45,7 @@ tPosL first(tList list) {
  * post: devuelve count - 1.
  */
 tPosL last(tList list) {
-    // se retorna la posicion del ultimo elemento, que es el contador menos uno
+    // se devuelve la posicion del ultimo elemento, que es el contador menos uno
     return list.count - 1;
 }
 
@@ -55,11 +55,11 @@ tPosL last(tList list) {
  * post: devuelve pos + 1, o LNULL si pos es el ultimo.
  */
 tPosL next(tPosL pos, tList list) {
-    // si la posicion actual es menor que el indice del ultimo elemento, se retorna el siguiente indice
+    // si la posicion actual es menor que el indice del ultimo elemento, se devuelve el siguiente indice
     if (pos < list.count - 1)
         return pos + 1;
     else
-        // si ya es el ultimo elemento, se retorna LNULL para indicar que no hay siguiente
+        // si ya es el ultimo elemento, se devuelve LNULL para indicar que no hay siguiente
         return LNULL;
 }
 
@@ -69,11 +69,11 @@ tPosL next(tPosL pos, tList list) {
  * post: devuelve pos - 1, o LNULL si pos es el primero.
  */
 tPosL previous(tPosL pos, tList list) {
-    // si la posicion es mayor que 0, se retorna el indice anterior
+    // si la posicion es mayor que 0, se devuelve el indice anterior
     if (pos > 0)
         return pos - 1;
     else
-        // si es el primer elemento, no existe posicion anterior, se retorna LNULL
+        // si es el primer elemento, no existe posicion anterior, se devuelve LNULL
         return LNULL;
 }
 
@@ -112,7 +112,7 @@ bool insertItem(tItemL item, tPosL pos, tList *list) {
  * post: se decrementa count y se desplazan los elementos posteriores.
  */
 void deleteAtPosition(tPosL pos, tList *list) {
-    // se verifica que la posicion sea valida; si no, se retorna sin hacer nada
+    // se verifica que la posicion sea valida; si no, se devuelve sin hacer nada
     if (pos < 0 || pos >= list->count)
         return;
     // se desplazan los elementos a partir de la posicion eliminada hacia la izquierda
@@ -129,7 +129,7 @@ void deleteAtPosition(tPosL pos, tList *list) {
  * post: devuelve una copia del elemento.
  */
 tItemL getItem(tPosL pos, tList list) {
-    // se retorna el elemento en el indice especificado
+    // se devuelve el elemento en el indice especificado
     return list.items[pos];
 }
 
@@ -153,8 +153,8 @@ tPosL findItem(tConsoleId consoleId, tList list) {
     // se recorre la lista desde el inicio hasta encontrar el elemento que coincida
     for (int i = 0; i < list.count; i++) {
         if (strcmp(list.items[i].consoleId, consoleId) == 0)
-            return i; // se retorna la posicion del elemento encontrado
+            return i; // se devuelve la posicion del elemento encontrado
     }
-    // si no se encontro, se retorna LNULL
+    // si no se encontro, se devuelve LNULL
     return LNULL;
 }

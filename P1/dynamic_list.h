@@ -72,7 +72,7 @@ tPosL previous(tPosL pos, tList list);
  *           si pos es LNULL, inserta al final.
  * pre: la lista esta inicializada y pos es valida o LNULL.
  * post: se asigna memoria para el nuevo nodo y se inserta.
- *       devuelve true si la insercion fue exitosa, false en caso de fallo.
+ *       devuelve true si la insercion fue correcta, false en caso de fallo.
  */
 bool insertItem(tItemL item, tPosL pos, tList *list);
 

@@ -158,8 +158,8 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             float avgNintendo = (countNintendo > 0) ? sumNintendo / countNintendo : 0;
             float avgSega = (countSega > 0) ? sumSega / countSega : 0;
             printf("Brand     Consoles    Price  Average\n");
-            printf("Nintendo %9d %8.2f %8.2f\n", countNintendo, sumNintendo, avgNintendo);
-            printf("Sega     %9d %8.2f %8.2f\n", countSega, sumSega, avgSega);
+            printf("Nintendo  %8d %8.2f %8.2f\n", countNintendo, sumNintendo, avgNintendo);
+            printf("Sega      %8d %8.2f %8.2f\n", countSega, sumSega, avgSega);
         }
     }
     else {
@@ -193,7 +193,7 @@ void readTasks(char *filename) {
 }
 
 int main(int nargs, char **args) {
-    char *file_name = "new.txt";
+    char *file_name = bid.txt";
     if (nargs > 1) {
         file_name = args[1];
     } else {

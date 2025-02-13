@@ -45,12 +45,12 @@ tPosL first(tList list) {
 tPosL last(tList list) {
     tPosL p = list;
     if (p == NULL)
-        return NULL;  // si la lista es vacia, se retorna null
+        return NULL;  // si la lista es vacia, se devuelve null
     // se recorre la lista hasta el ultimo nodo (donde p->next es null)
     while (p->next != NULL) {
         p = p->next;
     }
-    return p;  // se retorna el ultimo nodo
+    return p;  // se devuelve el ultimo nodo
 }
 
 /*
@@ -60,8 +60,8 @@ tPosL last(tList list) {
  */
 tPosL next(tPosL pos, tList list) {
     if (pos == NULL)
-        return NULL;  // si pos es null, se retorna null
-    return pos->next;  // se retorna el siguiente nodo
+        return NULL;  // si pos es null, se devuelve null
+    return pos->next;  // se devuelve el siguiente nodo
 }
 
 /*
@@ -77,7 +77,7 @@ tPosL previous(tPosL pos, tList list) {
     while (prev != NULL && prev->next != pos) {
         prev = prev->next;
     }
-    return prev;  // se retorna el nodo anterior, o null si no se encontro
+    return prev;  // se devuelve el nodo anterior, o null si no se encontro
 }
 
 /*
@@ -85,12 +85,12 @@ tPosL previous(tPosL pos, tList list) {
  *           si pos es LNULL, inserta al final.
  * pre: la lista esta inicializada y pos es valida o LNULL.
  * post: se asigna memoria para el nuevo nodo y se inserta.
- *       devuelve true si la insercion fue exitosa, false en caso de fallo.
+ *       devuelve true si la insercion fue correcta, false en caso de fallo.
  */
 bool insertItem(tItemL item, tPosL pos, tList *list) {
     tNode *newNode = (tNode*) malloc(sizeof(tNode));
     if (!newNode)
-        return false;  // si malloc falla, se retorna false
+        return false;  // si malloc falla, se devuelve false
     newNode->item = item;  // se asigna el elemento al nuevo nodo
     newNode->next = NULL;  // se inicializa el puntero next a null
 
@@ -117,7 +117,7 @@ bool insertItem(tItemL item, tPosL pos, tList *list) {
     /* insertar antes de pos: buscar el nodo anterior */
     tPosL prev = previous(pos, *list);
     if (prev == NULL)
-        return false;  // si no se encuentra el nodo anterior, se retorna false
+        return false;  // si no se encuentra el nodo anterior, se devuelve false
     newNode->next = pos;
     prev->next = newNode;
     return true;
@@ -149,7 +149,7 @@ void deleteAtPosition(tPosL pos, tList *list) {
  * post: devuelve el elemento contenido en pos.
  */
 tItemL getItem(tPosL pos, tList list) {
-    return pos->item;  // se retorna el elemento almacenado en el nodo
+    return pos->item;  // se devuelve el elemento almacenado en el nodo
 }
 
 /*
@@ -173,8 +173,8 @@ tPosL findItem(tConsoleId consoleId, tList list) {
     // se recorre la lista comparando consoleId
     while (p != NULL) {
         if (strcmp(p->item.consoleId, consoleId) == 0)
-            return p;  // se retorna el nodo si se encuentra coincidencia
+            return p;  // se devuelve el nodo si se encuentra coincidencia
         p = p->next;
     }
-    return NULL;  // si no se encuentra, se retorna NULL
+    return NULL;  // si no se encuentra, se devuelve NULL
 }

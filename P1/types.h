@@ -6,15 +6,15 @@ AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
 GROUP: 1.2    DATE: 21/03/2025
 */
 
-#ifndef PRO2_2024_P1_TYPES_H    // si no se ha definido PRO2_2024_P1_TYPES_H, se procede a definirlo
-#define PRO2_2024_P1_TYPES_H    // se define el macro para evitar inclusiones multiples
+#ifndef PRO2_2024_P1_TYPES_H
+#define PRO2_2024_P1_TYPES_H
 
 #define NAME_LENGTH_LIMIT 10    // define la longitud maxima de los identificadores (userId y consoleId)
 
-// se define el tipo tUserId como un arreglo de char de longitud NAME_LENGTH_LIMIT
+// se define el tipo tUserId como un array de char de longitud NAME_LENGTH_LIMIT
 typedef char tUserId[NAME_LENGTH_LIMIT];
 
-// se define el tipo tConsoleId como un arreglo de char de longitud NAME_LENGTH_LIMIT
+// se define el tipo tConsoleId como un array de char de longitud NAME_LENGTH_LIMIT
 typedef char tConsoleId[NAME_LENGTH_LIMIT];
 
 // se define el tipo enumerado tConsoleBrand para representar la marca de la consola
@@ -33,7 +33,7 @@ typedef struct tItemL {
     tUserId seller;             // identificador del vendedor (cadena de caracteres)
     tConsoleId consoleId;       // identificador de la consola (cadena de caracteres)
     tConsoleBrand consoleBrand; // marca de la consola (nintendo o sega)
-    tConsolePrice consolePrice; // precio de la consola (valor flotante)
+    tConsolePrice consolePrice; // precio de la consola (valor float)
     tBidCounter bidCounter;     // contador de pujas (valor entero)
 } tItemL;
 
