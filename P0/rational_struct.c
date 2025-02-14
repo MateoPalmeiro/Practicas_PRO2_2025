@@ -6,6 +6,8 @@ AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
 GROUP: 1.2 DATE: 04/02/2025
 */
 
+#ifdef STRUCT_MODE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "rational_struct.h"
@@ -17,7 +19,8 @@ static int mcd(int a, int b) {
     return mcd(b, a % b);
 }
 
-// crea un numero racional y simplifica la fraccion
+// crea un numero racional a partir de un numerador n y un denominador d
+// y simplifica la fraccion
 Rational createRational(int n, int d) {
     if (d == 0) {
         fprintf(stderr, "error: denominador no puede ser 0.\n");
@@ -36,7 +39,7 @@ Rational createRational(int n, int d) {
     return r;
 }
 
-// devuelve el numerador del numero racional
+// devuelve el numerador de un numero racional
 int numerator(Rational r) {
     return r.num;
 }
@@ -52,3 +55,5 @@ Rational sum(Rational r1, Rational r2) {
     int d = r1.den * r2.den;
     return createRational(n, d);
 }
+
+#endif // STRUCT_MODE

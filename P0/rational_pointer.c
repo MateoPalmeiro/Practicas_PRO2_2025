@@ -6,6 +6,8 @@ AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
 GROUP: 1.2 DATE: 04/02/2025
 */
 
+#ifndef STRUCT_MODE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "rational_pointer.h"
@@ -23,11 +25,6 @@ Rational* createRational(int n, int d) {
         fprintf(stderr, "error: denominador no puede ser 0.\n");
         exit(EXIT_FAILURE);
     }
-    Rational *r = (Rational*) malloc(sizeof(Rational));
-    if (r == NULL) {
-        fprintf(stderr, "error: memoria insuficiente.\n");
-        exit(EXIT_FAILURE);
-    }
     // normalizar el signo: el denominador siempre sera positivo
     if (d < 0) {
         n = -n;
@@ -35,6 +32,11 @@ Rational* createRational(int n, int d) {
     }
     // calcular el mcd para simplificar la fraccion
     int divisor = mcd((n < 0) ? -n : n, (d < 0) ? -d : d);
+    Rational *r = (Rational*) malloc(sizeof(Rational));
+    if (r == NULL) {
+        fprintf(stderr, "error: memoria insuficiente.\n");
+        exit(EXIT_FAILURE);
+    }
     r->num = n / divisor;
     r->den = d / divisor;
     return r;
@@ -56,3 +58,5 @@ Rational* sum(Rational* r1, Rational* r2) {
     int d = r1->den * r2->den;
     return createRational(n, d);
 }
+
+#endif // not STRUCT_MODE

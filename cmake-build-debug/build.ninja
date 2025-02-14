@@ -78,15 +78,19 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 build cmake_object_order_depends_target_P0_2025: phony || P0/CMakeFiles/P0_2025.dir
 
 build P0/CMakeFiles/P0_2025.dir/main.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/P0/main.c || cmake_object_order_depends_target_P0_2025
-  DEFINES = -DSTRUCT_MODE
   DEP_FILE = P0\CMakeFiles\P0_2025.dir\main.c.obj.d
   FLAGS = -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = P0\CMakeFiles\P0_2025.dir
   OBJECT_FILE_DIR = P0\CMakeFiles\P0_2025.dir
 
 build P0/CMakeFiles/P0_2025.dir/rational_struct.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/P0/rational_struct.c || cmake_object_order_depends_target_P0_2025
-  DEFINES = -DSTRUCT_MODE
   DEP_FILE = P0\CMakeFiles\P0_2025.dir\rational_struct.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = P0\CMakeFiles\P0_2025.dir
+  OBJECT_FILE_DIR = P0\CMakeFiles\P0_2025.dir
+
+build P0/CMakeFiles/P0_2025.dir/rational_pointer.c.obj: C_COMPILER__P0_2025_unscanned_Debug C$:/Users/palme/CLionProjects/Pro2/P0_2025/P0/rational_pointer.c || cmake_object_order_depends_target_P0_2025
+  DEP_FILE = P0\CMakeFiles\P0_2025.dir\rational_pointer.c.obj.d
   FLAGS = -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = P0\CMakeFiles\P0_2025.dir
   OBJECT_FILE_DIR = P0\CMakeFiles\P0_2025.dir
@@ -99,7 +103,7 @@ build P0/CMakeFiles/P0_2025.dir/rational_struct.c.obj: C_COMPILER__P0_2025_unsca
 #############################################
 # Link the executable P0\P0_2025.exe
 
-build P0/P0_2025.exe: C_EXECUTABLE_LINKER__P0_2025_Debug P0/CMakeFiles/P0_2025.dir/main.c.obj P0/CMakeFiles/P0_2025.dir/rational_struct.c.obj
+build P0/P0_2025.exe: C_EXECUTABLE_LINKER__P0_2025_Debug P0/CMakeFiles/P0_2025.dir/main.c.obj P0/CMakeFiles/P0_2025.dir/rational_struct.c.obj P0/CMakeFiles/P0_2025.dir/rational_pointer.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = P0\CMakeFiles\P0_2025.dir

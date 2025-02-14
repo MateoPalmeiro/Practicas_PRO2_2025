@@ -6,8 +6,8 @@ AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
 GROUP: 1.2 DATE: 10/02/2025
 */
 
-// la definicion de struct_mode se realiza globalmente en cmake (mediante add_definitions),
-// por lo que no es necesario definirla aqui.
+// comentario: para seleccionar el modo, comentar o descomentar la siguiente linea
+//#define STRUCT_MODE
 
 #include <stdio.h>
 #include <stdlib.h>
