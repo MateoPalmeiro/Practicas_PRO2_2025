@@ -34,6 +34,19 @@ tList list;
  *   imprime la operacion procesada y realiza la operacion.
  * pre: los parametros deben ser validos segun la operacion.
  * post: se muestra en pantalla la cabecera y el resultado de la operacion.
+ * variables:
+ *   - commandNumber: char*, numero de la peticion.
+ *   - command: char, tipo de operacion.
+ *   - param1, param2, param3, param4: char*, parametros de la operacion.
+ *   - consoleId: char*, identificador de la consola.
+ *   - userId: char*, identificador del usuario.
+ *   - brandStr: char*, marca de la consola.
+ *   - priceStr: char*, precio de la consola.
+ *   - brand: tConsoleBrand, enumeracion que representa la marca de la consola.
+ *   - price: float, precio de la consola.
+ *   - pos: tPosL, posicion en la lista.
+ *   - item: tItemL, elemento de la lista.
+ *   - brandStrOut: char*, cadena que representa la marca de la consola.
  */
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4) {
     if (command == 'N') {
