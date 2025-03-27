@@ -1,9 +1,9 @@
 /*
-title: programming ii labs
-subtitle: practical p2 - main program
-author 1: mateo palmeiro muniz           login 1: mateo.palmeiro@udc.es
-author 2: nicolas otero costa            login 2: nicolas.otero1@udc.es
-group: 4.3    date: 21/03/2025
+TITLE: PROGRAMMING II LABS
+SUBTITLE: Practical P1 - Main Program
+AUTHOR 1: Mateo Palmeiro Muniz           LOGIN 1: mateo.palmeiro@udc.es
+AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
+GROUP: 4.3    DATE: 21/03/2025
 */
 
 #include <stdio.h>
