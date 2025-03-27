@@ -1,0 +1,5 @@
+/Users/lidia/Downloads/P2 Enunciado y materiales  Instructions and materials-20250325/english/CLion/Plantilla-Template_P2/cmake-build-debug/CMakeFiles/test_bid_stack.dir
+/Users/lidia/Downloads/P2 Enunciado y materiales  Instructions and materials-20250325/english/CLion/Plantilla-Template_P2/cmake-build-debug/CMakeFiles/test_console_list.dir
+/Users/lidia/Downloads/P2 Enunciado y materiales  Instructions and materials-20250325/english/CLion/Plantilla-Template_P2/cmake-build-debug/CMakeFiles/main.dir
+/Users/lidia/Downloads/P2 Enunciado y materiales  Instructions and materials-20250325/english/CLion/Plantilla-Template_P2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/lidia/Downloads/P2 Enunciado y materiales  Instructions and materials-20250325/english/CLion/Plantilla-Template_P2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
