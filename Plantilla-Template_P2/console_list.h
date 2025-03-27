@@ -1,3 +1,11 @@
+/*
+TITLE: PROGRAMMING II LABS
+SUBTITLE: Practical P1 - Main Program
+AUTHOR 1: Mateo Palmeiro Muniz           LOGIN 1: mateo.palmeiro@udc.es
+AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
+GROUP: 4.3    DATE: 21/03/2025
+*/
+
 #ifndef CONSOLE_LIST_H
 #define CONSOLE_LIST_H
 
