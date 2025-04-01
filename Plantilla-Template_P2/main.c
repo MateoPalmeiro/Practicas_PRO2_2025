@@ -1,9 +1,9 @@
 /*
 TITLE: PROGRAMMING II LABS
-SUBTITLE: Practical P1 - Main Program
+SUBTITLE: Practical P2 - Main Program
 AUTHOR 1: Mateo Palmeiro Muniz           LOGIN 1: mateo.palmeiro@udc.es
 AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
-GROUP: 4.3    DATE: 21/03/2025
+GROUP: 4.3    DATE: 04/04/2025
 */
 
 #include <stdio.h>
@@ -24,6 +24,21 @@ GROUP: 4.3    DATE: 21/03/2025
  *   - plist: tList*, puntero a la lista de consolas.
  * salida:
  *   se imprime la cabecera y se ejecuta la operacion correspondiente.
+ * pre: los parametros deben ser validos segun la operacion.
+ * post: se muestra en pantalla la cabecera y el resultado de la operacion.
+ * variables:
+ *   - commandNumber: char*, numero de la peticion.
+ *   - command: char, tipo de operacion.
+ *   - param1, param2, param3, param4: char*, parametros de la operacion.
+ *   - consoleId: char*, identificador de la consola.
+ *   - userId: char*, identificador del usuario.
+ *   - brandStr: char*, marca de la consola.
+ *   - priceStr: char*, precio de la consola.
+ *   - brand: tConsoleBrand, enumeracion que representa la marca de la consola.
+ *   - price: float, precio de la consola.
+ *   - pos: tPosL, posicion en la lista.
+ *   - item: tItemL, elemento de la lista.
+ *   - brandStrOut: char*, cadena que representa la marca de la consola.
  */
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList *plist) {
     if (command == 'N') {  // operacion new: formato "N consoleId seller brand price"
@@ -308,12 +323,16 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
 }
 
 /*
- * readtasks: lee las peticiones de un fichero y procesa cada una.
- * entrada:
+ * readTasks: lee las peticiones de un fichero y procesa cada una.
+ * pre: el archivo debe existir y ser accesible.
+ * post: se procesan las peticiones leídas.
+ * variables:
  *   - filename: char*, nombre del fichero con las peticiones.
  *   - plist: tList*, puntero a la lista de consolas.
- * salida:
- *   se procesan las peticiones leidas.
+ *   - f: FILE*, puntero al archivo.
+ *   - commandNumber, command, param1, param2, param3, param4: char*, parámetros de las peticiones.
+ *   - delimiters: const char[], delimitadores para separar los parámetros.
+ *   - buffer: char[], buffer para leer las líneas del archivo.
  */
 void readTasks(char *filename, tList *plist) {
     FILE *f = NULL;
@@ -340,11 +359,14 @@ void readTasks(char *filename, tList *plist) {
 }
 
 /*
- * main: funcion principal.
- * argumentos:
- *   - nargs, args: parametros de la linea de comandos.
- * salida:
- *   inicializa la lista y procesa el fichero de peticiones.
+ * main: función principal.
+ * pre: se deben proporcionar los parámetros de la línea de comandos.
+ * post: inicializa la lista y procesa el fichero de peticiones.
+ * variables:
+ *   - nargs: int, número de argumentos de la línea de comandos.
+ *   - args: char**, array de argumentos de la línea de comandos.
+ *   - file_name: char*, nombre del fichero de peticiones.
+ *   - list: tList, lista de consolas.
  */
 int main(int nargs, char **args) {
     char *file_name = "bid.txt";
