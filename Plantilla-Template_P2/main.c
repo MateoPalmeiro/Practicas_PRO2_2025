@@ -16,26 +16,14 @@ GROUP: 4.3    DATE: 21/03/2025
 #define MAX_BUFFER 255
 
 /*
- * processCommand: procesa una peticion de la plataforma de subastas.
+ * processcommand: procesa una peticion de la plataforma de subastas.
  * entradas:
- *   - commandNumber: char*, numero de la peticion.
+ *   - commandnumber: char*, numero de la peticion.
  *   - command: char, tipo de operacion.
  *   - param1, param2, param3, param4: char*, parametros asociados a la operacion.
  *   - plist: tList*, puntero a la lista de consolas.
  * salida:
  *   se imprime la cabecera y se ejecuta la operacion correspondiente.
- * pre: los parametros deben ser validos segun la operacion.
- * post: se muestran los mensajes de salida de la operacion.
- * variables:
- *   - consoleId: char*, identificador de la consola.
- *   - userId: char*, identificador del usuario (seller o bidder).
- *   - brandStr: char*, marca de la consola.
- *   - priceStr: char*, precio de la consola.
- *   - brand: tConsoleBrand, enumeracion que representa la marca.
- *   - newPrice: float, precio de la puja.
- *   - pos: tPosL, posicion en la lista.
- *   - item: tItemL, elemento (consola) de la lista.
- *   - brandStrOut: char*, cadena que representa la marca para salida.
  */
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList *plist) {
     if (command == 'N') {  // operacion new: formato "N consoleId seller brand price"
@@ -70,11 +58,19 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         item.consoleBrand = brand;
         item.consolePrice = atof(priceStr);
         item.bidCounter = 0;
-        createEmptyStack(&item.bidStack);  // inicializar la pila de pujas asociada a la consola
-        if (insertItem(item, LNULL, plist))
+        // reserva memoria para la pila y la inicializa
+        item.bidStack = malloc(sizeof(tStack));
+        if (item.bidStack == NULL) {
+            printf("+ error: new not possible (memory allocation failed)\n");
+            return;
+        }
+        createEmptyStack(item.bidStack);
+        if (insertItem(item, plist))
             printf("* new: console %s seller %s brand %s price %.2f\n", item.consoleId, item.seller, brandStr, item.consolePrice);
-        else
+        else {
             printf("+ error: new not possible\n");
+            free(item.bidStack);
+        }
     }
     else if (command == 'D') {  // operacion delete: formato "D consoleId"
         char *consoleId = param1;
@@ -89,10 +85,11 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             printf("+ error: delete not possible\n");
         } else {
             tItemL item = getItem(pos, *plist);
-            if (!isEmptyStack(item.bidStack)) {
+            if (!isEmptyStack(*item.bidStack)) {
                 printf("+ error: delete not possible\n");
                 return;
             }
+            free(item.bidStack);
             deleteAtPosition(pos, plist);
             char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
             printf("* delete: console %s seller %s brand %s price %.2f bids %d\n",
@@ -121,8 +118,8 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             return;
         }
         float currentPrice = item.consolePrice;
-        if (!isEmptyStack(item.bidStack)) {
-            tItemS topBid = peek(item.bidStack);
+        if (!isEmptyStack(*item.bidStack)) {
+            tItemS topBid = peek(*item.bidStack);
             currentPrice = topBid.consolePrice;
         }
         if (newPrice <= currentPrice) {
@@ -132,7 +129,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         tItemS bid;
         strcpy(bid.bidder, bidder);
         bid.consolePrice = newPrice;
-        if (!push(bid, &item.bidStack)) {
+        if (!push(bid, item.bidStack)) {
             printf("+ error: bid not possible\n");
             return;
         }
@@ -156,14 +153,15 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             return;
         }
         tItemL item = getItem(pos, *plist);
-        if (isEmptyStack(item.bidStack)) {
+        if (isEmptyStack(*item.bidStack)) {
             printf("+ error: award not possible\n");
             return;
         }
-        tItemS winningBid = peek(item.bidStack);
+        tItemS winningBid = peek(*item.bidStack);
         char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
         printf("* award: console %s bidder %s brand %s price %.2f\n",
                item.consoleId, winningBid.bidder, brandStrOut, winningBid.consolePrice);
+        free(item.bidStack);
         deleteAtPosition(pos, plist);
     }
     else if (command == 'I') {  // operacion invalidatebids: formato "I"
@@ -187,7 +185,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         while (pos != LNULL) {
             tItemL item = getItem(pos, *plist);
             if (item.bidCounter > 2 * averageBids) {
-                clearStack(&item.bidStack);
+                clearStack(item.bidStack);
                 int oldBids = item.bidCounter;
                 item.bidCounter = 0;
                 updateItem(item, pos, plist);
@@ -218,6 +216,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
                 printf("removing console %s seller %s brand %s price %.2f bids %d\n",
                        item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
                 removed++;
+                free(item.bidStack);
                 if (pos == *plist) {
                     *plist = pos->next;
                     free(pos);
@@ -248,9 +247,9 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         while (pos != LNULL) {
             tItemL item = getItem(pos, *plist);
             char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-            if (!isEmptyStack(item.bidStack))
+            if (!isEmptyStack(*item.bidStack))
                 printf("console %s seller %s brand %s price %.2f bids %d top bidder %s\n",
-                       item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter, peek(item.bidStack).bidder);
+                       item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter, peek(*item.bidStack).bidder);
             else
                 printf("console %s seller %s brand %s price %.2f bids %d no bids\n",
                        item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
@@ -281,8 +280,8 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         float maxIncrease = 0;
         while (pos != LNULL) {
             tItemL item = getItem(pos, *plist);
-            if (!isEmptyStack(item.bidStack)) {
-                tItemS topBid = peek(item.bidStack);
+            if (!isEmptyStack(*item.bidStack)) {
+                tItemS topBid = peek(*item.bidStack);
                 float increase = ((topBid.consolePrice - item.consolePrice) / item.consolePrice) * 100;
                 if (increase > maxIncrease) {
                     maxIncrease = increase;
@@ -293,7 +292,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         }
         if (topPos != LNULL) {
             tItemL topItem = getItem(topPos, *plist);
-            tItemS topBid = peek(topItem.bidStack);
+            tItemS topBid = peek(*topItem.bidStack);
             char *brandStrOut = (topItem.consoleBrand == nintendo) ? "nintendo" : "sega";
             printf("\n top bid: console %s seller %s brand %s price %.2f bidder %s top price %.2f increase %.2f%%\n",
                    topItem.consoleId, topItem.seller, brandStrOut, topItem.consolePrice,
@@ -309,7 +308,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
 }
 
 /*
- * readTasks: lee las peticiones de un fichero y procesa cada una.
+ * readtasks: lee las peticiones de un fichero y procesa cada una.
  * entrada:
  *   - filename: char*, nombre del fichero con las peticiones.
  *   - plist: tList*, puntero a la lista de consolas.

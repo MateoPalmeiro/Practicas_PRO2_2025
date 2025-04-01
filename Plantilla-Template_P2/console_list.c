@@ -88,29 +88,29 @@ bool insertItem(tItemL item, tList *list) {
         return false;
     newNode->item = item;
     newNode->next = NULL;
-    
+
     // si la lista esta vacia, insertar como primer nodo
     if (*list == NULL) {
         *list = newNode;
         return true;
     }
-    
+
     // si el nuevo item debe ir al inicio (orden alfabetico por consoleid)
     if (strcmp(item.consoleId, (*list)->item.consoleId) < 0) {
         newNode->next = *list;
         *list = newNode;
         return true;
     }
-    
+
     // buscar la posicion de insercion
     tPosL prev = *list;
     while (prev->next != NULL && strcmp(prev->next->item.consoleId, item.consoleId) < 0) {
         prev = prev->next;
     }
-    
+
     newNode->next = prev->next;
     prev->next = newNode;
-    
+
     return true;
 }
 

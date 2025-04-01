@@ -1,0 +1,9 @@
+# ninja log v5
+17	116	7652249115008515	CMakeFiles/test_bid_stack.dir/bid_stack.c.obj	c91438a4eb34f855
+12	118	7652249115008515	CMakeFiles/test_bid_stack.dir/test_bid_stack.c.obj	71218c6d2b1c7646
+118	266	7652249116461885	C:/Users/palme/Desktop/Plantilla-Template_P2/bin/test_bid_stack.exe	2e761e9bb0152a0d
+13	106	7652254333883581	CMakeFiles/test_console_list.dir/console_list.c.obj	a1383d9afea58c20
+8	99	7652254333823571	CMakeFiles/test_console_list.dir/test_console_list.c.obj	2910c29c111d8fd6
+22	103	7652254505738396	CMakeFiles/main.dir/bid_stack.c.obj	d51551e85029c28f
+106	201	7652254334785522	C:/Users/palme/Desktop/Plantilla-Template_P2/bin/test_console_list.exe	772aefcec63d2574
+18	111	7652254505833622	CMakeFiles/main.dir/console_list.c.obj	38a33f1b9ac898d9
