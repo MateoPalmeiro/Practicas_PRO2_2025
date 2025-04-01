@@ -72,9 +72,8 @@ tPosL previous(tPosL pos, tList list);
  * pre: la lista esta inicializada.
  * post: se inserta el elemento en la posicion correspondiente segun el orden alfabetico.
  *       devuelve true si la insercion fue correcta, false en caso contrario.
- * nota: el parametro pos se ignora.
  */
-bool insertItem(tItemL item, tPosL pos, tList *list);
+bool insertItem(tItemL item, tList *list);
 
 /*
  * deleteAtPosition: elimina el nodo en la posicion dada.
