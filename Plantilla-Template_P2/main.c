@@ -100,10 +100,6 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             printf("+ Error: Delete not possible\n");
         } else {
             tItemL item = getItem(pos, *plist);
-            if (!isEmptyStack(*item.bidStack)) {
-                printf("+ Error: Delete not possible\n");
-                return;
-            }
             free(item.bidStack);
             deleteAtPosition(pos, plist);
             char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
@@ -228,7 +224,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             tItemL item = getItem(pos, *plist);
             if (item.bidCounter == 0) {
                 char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-                printf("removing console %s seller %s brand %s price %.2f bids %d\n",
+                printf("Removing console %s seller %s brand %s price %.2f bids %d\n",
                        item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
                 removed++;
                 free(item.bidStack);
