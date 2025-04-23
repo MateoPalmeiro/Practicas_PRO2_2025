@@ -67,7 +67,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             brand = sega;
             strcpy(brandStr, "sega");
         } else {
-            printf("+ Error: New not possible (invalid brand)\n");
+            printf("+ Error: New not possible\n");
             return;
         }
         item.consoleBrand = brand;
