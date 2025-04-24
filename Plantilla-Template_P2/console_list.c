@@ -3,7 +3,7 @@ TITLE: PROGRAMMING II LABS
 SUBTITLE: Practical P2 - Ordered list implementation
 AUTHOR 1: Mateo Palmeiro Muniz           LOGIN 1: mateo.palmeiro@udc.es
 AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
-GROUP: 4.3    DATE: 04/04/2025
+GROUP: 4.3    DATE: 25/04/2025
 */
 
 #include <stdlib.h>
@@ -11,45 +11,68 @@ GROUP: 4.3    DATE: 04/04/2025
 #include "console_list.h"
 
 /*
- * createEmptyList: inicializa una lista ordenada vacia.
- * pre: list es un puntero a tList.
- * post: se asigna *list = null.
- * variables:
- *   - list: tList*, puntero a la lista que se va a inicializar.
+* Objetivo: Inicializa una lista ordenada vacía.
+ * Entradas:
+ * - list: tList*, puntero a la lista que se va a inicializar.
+ * Salidas:
+ * - Ninguna.
+ * Precondiciones:
+ * - list debe ser un puntero válido a tList.
+ * Postcondiciones:
+ * - Queda una lista vacía
  */
+
 void createEmptyList(tList *list) {
     *list = LNULL;
 }
 
+
 /*
- * isEmptyList: determina si la lista esta vacia.
- * pre: la lista esta inicializada.
- * post: devuelve true si list es null, false en otro caso.
- * variables:
- *   - list: tList, lista que se va a verificar.
+ * Objetivo: Determina si la lista está vacía.
+ * Entradas:
+ * - list: tList, lista que se va a verificar.
+ * Salidas:
+ * - true: si la lista está vacía.
+ * - false: si la lista no está vacía.
+ * Precondiciones:
+ * - La lista debe estar inicializada.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 bool isEmptyList(tList list) {
     return (list == LNULL);
 }
 
+
 /*
- * first: devuelve la primera posicion de la lista.
- * pre: la lista esta inicializada.
- * post: devuelve el primer nodo.
- * variables:
- *   - list: tList, lista de la cual se obtendra la primera posicion.
+ * Objetivo: Devuelve la primera posición de la lista.
+ * Entradas:
+ * - list: tList, lista de la cual se obtendrá la primera posición.
+ * Salidas:
+ * - El primer nodo de la lista.
+ * Precondiciones:
+ * - La lista debe estar inicializada.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 tPosL first(tList list) {
     return list;
 }
 
 /*
- * last: devuelve la ultima posicion de la lista.
- * pre: la lista no esta vacia.
- * post: devuelve el puntero al ultimo nodo.
- * variables:
- *   - list: tList, lista de la cual se obtendra la ultima posicion.
+ * Objetivo: Devuelve la última posición de la lista.
+ * Entradas:
+ * - list: tList, lista de la cual se obtendrá la última posición.
+ * Salidas:
+ * - El último nodo de la lista
+ * Precondiciones:
+ * - La lista no debe estar vacía.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 tPosL last(tList list) {
     tPosL p = list;
     if (p == LNULL)
@@ -59,28 +82,43 @@ tPosL last(tList list) {
     return p;
 }
 
+
 /*
- * next: devuelve la posicion siguiente a la dada.
- * pre: pos es una posicion valida.
- * post: devuelve pos->next o LNULL si no existe.
- * variables:
- *   - pos: tPosL, posicion actual en la lista.
- *   - list: tList, lista en la que se encuentra la posicion.
+ * Objetivo: Devuelve la posición siguiente a la dada.
+ * Entradas:
+ * - pos: tPosL, posición actual en la lista.
+ * - list: tList, lista en la que se encuentra la posición.
+ * Salidas:
+ * - pos->next: la posición siguiente.
+ * - LNULL: si no existe una posición siguiente.
+ * Precondiciones:
+ * - pos debe ser una posición válida.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 tPosL next(tPosL pos, tList list) {
     if (pos == LNULL)
         return LNULL;
     return pos->next;
 }
 
+
 /*
- * previous: devuelve la posicion anterior a la dada.
- * pre: pos es una posicion valida y la lista no esta vacia.
- * post: devuelve la posicion anterior o LNULL si pos es el primero.
- * variables:
- *   - pos: tPosL, posicion actual en la lista.
- *   - list: tList, lista en la que se encuentra la posicion.
+ * Objetivo: Devuelve la posición anterior a la dada.
+ * Entradas:
+ * - pos: tPosL, posición actual en la lista.
+ * - list: tList, lista en la que se encuentra la posición.
+ * Salidas:
+ * - La posición anterior a pos.
+ * - LNULL: si pos es la primera posición de la lista.
+ * Precondiciones:
+ * - pos debe ser una posición válida.
+ * - La lista no debe estar vacía.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 tPosL previous(tPosL pos, tList list) {
     if (pos == list)
         return LNULL;
@@ -90,17 +128,21 @@ tPosL previous(tPosL pos, tList list) {
     return prev;
 }
 
+
 /*
- * insertItem: inserta un elemento en la lista de forma ordenada por consoleid.
- * pre: la lista esta inicializada.
- * post: se inserta el elemento en la posicion correcta segun el orden alfabetico.
- *       devuelve true si la insercion fue exitosa, false en caso contrario.
- * variables:
- *   - item: tItemL, elemento que se va a insertar.
- *   - list: tList*, puntero a la lista en la que se insertara el elemento.
- *   - newNode: tNode*, nuevo nodo que se insertara en la lista.
- *   - prev: tPosL, posicion anterior en la lista.
+ * Objetivo: Inserta un elemento en la lista de forma ordenada por consoleId.
+ * Entradas:
+ * - item: tItemL, elemento que se va a insertar.
+ * - list: tList*, puntero a la lista en la que se insertará el elemento.
+ * Salidas:
+ * - true: si la inserción fue exitosa.
+ * - false: en caso contrario.
+ * Precondiciones:
+ * - La lista debe estar inicializada.
+ * Postcondiciones:
+ * - Las posiciones posteriores cambian de posición
  */
+
 bool insertItem(tItemL item, tList *list) {
     tNode *newNode = (tNode *) malloc(sizeof(tNode));
     if (!newNode)
@@ -133,15 +175,20 @@ bool insertItem(tItemL item, tList *list) {
     return true;
 }
 
+
 /*
- * deleteAtPosition: elimina el nodo en la posicion dada.
- * pre: pos es una posicion valida.
- * post: se elimina el nodo y se libera la memoria.
- * variables:
- *   - pos: tPosL, posicion del nodo que se va a eliminar.
- *   - list: tList*, puntero a la lista de la cual se eliminara el nodo.
- *   - prev: tPosL, posicion anterior en la lista.
+ * Objetivo: Elimina el nodo en la posición dada.
+ * Entradas:
+ * - pos: tPosL, posición del nodo que se va a eliminar.
+ * - list: tList*, puntero a la lista de la cual se eliminará el nodo.
+ * Salidas:
+ * - Ninguna.
+ * Precondiciones:
+ * - pos debe ser una posición válida.
+ * Postcondiciones:
+ * - Las posiciones posteriores cambian de posición
  */
+
 void deleteAtPosition(tPosL pos, tList *list) {
     if (*list == LNULL || pos == LNULL)
         return;
@@ -157,41 +204,59 @@ void deleteAtPosition(tPosL pos, tList *list) {
     }
 }
 
+
 /*
- * getItem: devuelve el elemento almacenado en la posicion dada.
- * pre: pos es una posicion valida.
- * post: devuelve el tItemL contenido en pos.
- * variables:
- *   - pos: tPosL, posicion del elemento que se va a obtener.
- *   - list: tList, lista en la que se encuentra el elemento.
+ * Objetivo: Devuelve el elemento almacenado en la posición dada.
+ * Entradas:
+ * - pos: tPosL, posición del elemento que se va a obtener.
+ * - list: tList, lista en la que se encuentra el elemento.
+ * Salidas:
+ * - El elemento (tItemL) contenido en pos.
+ * Precondiciones:
+ * - pos debe ser una posición válida.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 tItemL getItem(tPosL pos, tList list) {
     return pos->item;
 }
 
+
 /*
- * updateItem: actualiza el elemento en la posicion dada.
- * pre: pos es una posicion valida.
- * post: se reemplaza el item en pos por el nuevo item.
- * variables:
- *   - item: tItemL, nuevo valor que se asignara al elemento.
- *   - pos: tPosL, posicion del elemento que se va a actualizar.
- *   - list: tList*, puntero a la lista en la que se encuentra el elemento.
+ * Objetivo: Actualiza el elemento en la posición dada.
+ * Entradas:
+ * - item: tItemL, nuevo valor que se asignará al elemento.
+ * - pos: tPosL, posición del elemento que se va a actualizar.
+ * - list: tList*, puntero a la lista en la que se encuentra el elemento.
+ * Salidas:
+ * - Ninguna.
+ * Precondiciones:
+ * - pos debe ser una posición válida.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 void updateItem(tItemL item, tPosL pos, tList *list) {
     if (pos != LNULL)
         pos->item = item;
 }
 
+
 /*
- * findItem: busca el primer elemento cuyo consoleid coincide con el dado.
- * pre: la lista esta inicializada.
- * post: devuelve la posicion si se encuentra, o LNULL en caso contrario.
- * variables:
- *   - consoleId: tConsoleId, identificador que se buscara en la lista.
- *   - list: tList, lista en la que se buscara el elemento.
- *   - p: tPosL, posicion temporal para recorrer la lista.
+ * Objetivo: Busca el primer elemento cuyo consoleId coincide con el dado.
+ * Entradas:
+ * - consoleId: tConsoleId, identificador que se buscará en la lista.
+ * - list: tList, lista en la que se buscará el elemento.
+ * Salidas:
+ * - La posición del elemento si se encuentra.
+ * - LNULL: en caso contrario.
+ * Precondiciones:
+ * - La lista debe estar inicializada.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 tPosL findItem(tConsoleId consoleId, tList list) {
     tPosL p = list;
     while (p != LNULL) {
