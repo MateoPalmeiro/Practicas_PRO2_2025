@@ -18,7 +18,7 @@ GROUP: 4.3    DATE: 04/04/2025
  *   - list: tList*, puntero a la lista que se va a inicializar.
  */
 void createEmptyList(tList *list) {
-    *list = NULL;
+    *list = LNULL;
 }
 
 /*
@@ -29,7 +29,7 @@ void createEmptyList(tList *list) {
  *   - list: tList, lista que se va a verificar.
  */
 bool isEmptyList(tList list) {
-    return (list == NULL);
+    return (list == LNULL);
 }
 
 /*
@@ -52,9 +52,9 @@ tPosL first(tList list) {
  */
 tPosL last(tList list) {
     tPosL p = list;
-    if (p == NULL)
-        return NULL;
-    while (p->next != NULL)
+    if (p == LNULL)
+        return LNULL;
+    while (p->next != LNULL)
         p = p->next;
     return p;
 }
@@ -68,8 +68,8 @@ tPosL last(tList list) {
  *   - list: tList, lista en la que se encuentra la posicion.
  */
 tPosL next(tPosL pos, tList list) {
-    if (pos == NULL)
-        return NULL;
+    if (pos == LNULL)
+        return LNULL;
     return pos->next;
 }
 
@@ -83,9 +83,9 @@ tPosL next(tPosL pos, tList list) {
  */
 tPosL previous(tPosL pos, tList list) {
     if (pos == list)
-        return NULL;
+        return LNULL;
     tPosL prev = list;
-    while (prev != NULL && prev->next != pos)
+    while (prev != LNULL && prev->next != pos)
         prev = prev->next;
     return prev;
 }
@@ -106,10 +106,10 @@ bool insertItem(tItemL item, tList *list) {
     if (!newNode)
         return false;
     newNode->item = item;
-    newNode->next = NULL;
+    newNode->next = LNULL;
 
     // si la lista esta vacia, insertar como primer nodo
-    if (*list == NULL) {
+    if (*list == LNULL) {
         *list = newNode;
         return true;
     }
@@ -123,7 +123,7 @@ bool insertItem(tItemL item, tList *list) {
 
     // buscar la posicion de insercion
     tPosL prev = *list;
-    while (prev->next != NULL && strcmp(prev->next->item.consoleId, item.consoleId) < 0) {
+    while (prev->next != LNULL && strcmp(prev->next->item.consoleId, item.consoleId) < 0) {
         prev = prev->next;
     }
 
@@ -143,7 +143,7 @@ bool insertItem(tItemL item, tList *list) {
  *   - prev: tPosL, posicion anterior en la lista.
  */
 void deleteAtPosition(tPosL pos, tList *list) {
-    if (*list == NULL || pos == NULL)
+    if (*list == LNULL || pos == LNULL)
         return;
     if (pos == *list) {
         *list = pos->next;
@@ -151,7 +151,7 @@ void deleteAtPosition(tPosL pos, tList *list) {
         return;
     }
     tPosL prev = previous(pos, *list);
-    if (prev != NULL) {
+    if (prev != LNULL) {
         prev->next = pos->next;
         free(pos);
     }
@@ -179,7 +179,7 @@ tItemL getItem(tPosL pos, tList list) {
  *   - list: tList*, puntero a la lista en la que se encuentra el elemento.
  */
 void updateItem(tItemL item, tPosL pos, tList *list) {
-    if (pos != NULL)
+    if (pos != LNULL)
         pos->item = item;
 }
 
@@ -194,10 +194,10 @@ void updateItem(tItemL item, tPosL pos, tList *list) {
  */
 tPosL findItem(tConsoleId consoleId, tList list) {
     tPosL p = list;
-    while (p != NULL) {
+    while (p != LNULL) {
         if (strcmp(p->item.consoleId, consoleId) == 0)
             return p;
         p = p->next;
     }
-    return NULL;
+    return LNULL;
 }
