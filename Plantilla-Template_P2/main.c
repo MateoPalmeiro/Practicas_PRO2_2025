@@ -3,7 +3,7 @@ TITLE: PROGRAMMING II LABS
 SUBTITLE: Practical P2 - Main Program
 AUTHOR 1: Mateo Palmeiro Muniz           LOGIN 1: mateo.palmeiro@udc.es
 AUTHOR 2: Nicolas Otero Costa            LOGIN 2: nicolas.otero1@udc.es
-GROUP: 4.3    DATE: 04/04/2025
+GROUP: 4.3    DATE: 24/04/2025
 */
 
 #include <stdio.h>
