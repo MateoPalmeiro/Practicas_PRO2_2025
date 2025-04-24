@@ -41,281 +41,281 @@ GROUP: 4.3    DATE: 24/04/2025
  *   - brandStrOut: char*, cadena que representa la marca de la consola.
  */
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList *plist) {
-    if (command == 'N') {  // operacion new: formato "N consoleId seller brand price"
-        char *consoleId = param1;
-        char *seller = param2;
-        char *brandStr = param3;
-        char *priceStr = param4;
-        printf("********************\n");
-        printf("%s N: console %s seller %s brand %s price %s\n", commandNumber, consoleId, seller, brandStr, priceStr);
-        if (!consoleId || !seller || !brandStr || !priceStr) {
-            printf("+ Error: New not possible\n");
-            return;
-        }
-        if (findItem(consoleId, *plist) != LNULL) {
-            printf("+ Error: New not possible\n");
-            return;
-        }
-        tItemL item;
-        strcpy(item.consoleId, consoleId);
-        strcpy(item.seller, seller);
-        tConsoleBrand brand;
-        if (strcmp(brandStr, "nintendo") == 0) {
-            brand = nintendo;
-            strcpy(brandStr, "nintendo");
-        } else if (strcmp(brandStr, "sega") == 0) {
-            brand = sega;
-            strcpy(brandStr, "sega");
-        } else {
-            printf("+ Error: New not possible\n");
-            return;
-        }
-        item.consoleBrand = brand;
-        item.consolePrice = atof(priceStr);
-        item.bidCounter = 0;
-        // reserva memoria para la pila y la inicializa
-        item.bidStack = malloc(sizeof(tStack));
-        if (item.bidStack == NULL) {
-            printf("+ Error: New not possible (memory allocation failed)\n");
-            return;
-        }
-        createEmptyStack(item.bidStack);
-        if (insertItem(item, plist))
-            printf("* New: console %s seller %s brand %s price %.2f\n", item.consoleId, item.seller, brandStr, item.consolePrice);
-        else {
-            printf("+ Error: New not possible\n");
-            free(item.bidStack);
+    if (command == 'N') {  // operacion new: formato "N consoleid seller brand price"
+    char *consoleId = param1;
+    char *seller    = param2;
+    char *brandStr  = param3;
+    char *priceStr  = param4;
+
+    // cabecera
+    printf("********************\n");
+    printf("%s N: console %s seller %s brand %s price %.2f\n",
+           commandNumber, consoleId, seller, brandStr, atof(priceStr));
+
+    // validacion basica de parametros
+    if (!consoleId || !seller || !brandStr || !priceStr) {
+        printf("+ Error: New not possible\n");
+        return;
+    }
+    // no puede existir ya la consola
+    if (findItem(consoleId, *plist) != LNULL) {
+        printf("+ Error: New not possible\n");
+        return;
+    }
+
+    // construccion del item
+    tItemL item;
+    strcpy(item.consoleId, consoleId);
+    strcpy(item.seller,    seller);
+
+    if (strcmp(brandStr, "nintendo") == 0) {
+        item.consoleBrand = nintendo;
+    } else if (strcmp(brandStr, "sega") == 0) {
+        item.consoleBrand = sega;
+    } else {
+        printf("+ Error: New not possible\n");
+        return;
+    }
+
+    item.consolePrice = atof(priceStr);
+    item.bidCounter   = 0;
+
+    // inicializar la pila estatica dentro de item
+    createEmptyStack(&item.bidStack);
+
+    // intentar insertar en la lista
+    if (insertItem(item, plist)) {
+        printf("* New: console %s seller %s brand %s price %.2f\n",
+               item.consoleId, item.seller, brandStr, item.consolePrice);
+    } else {
+        printf("+ Error: New not possible\n");
         }
     }
-    else if (command == 'D') {  // operacion delete: formato "D consoleId"
-        char *consoleId = param1;
-        printf("********************\n");
-        printf("%s D: console %s\n", commandNumber, consoleId);
-        if (!consoleId) {
-            printf("+ Error: Delete not possible\n");
-            return;
-        }
-        tPosL pos = findItem(consoleId, *plist);
-        if (pos == LNULL) {
-            printf("+ Error: Delete not possible\n");
-        } else {
-            tItemL item = getItem(pos, *plist);
-            free(item.bidStack);
-            deleteAtPosition(pos, plist);
-            char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-            printf("* Delete: console %s seller %s brand %s price %.2f bids %d\n",
-                   item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
-        }
+    else if (command == 'D') {  // operacion delete: formato "D consoleid"
+    char *consoleId = param1;
+    // cabecera
+    printf("********************\n");
+    printf("%s D: console %s\n", commandNumber, consoleId);
+    if (!consoleId) {
+        printf("+ Error: Delete not possible\n");
+        return;
     }
-    else if (command == 'B') {  // operacion bid: formato "B consoleId bidder price"
-        char *consoleId = param1;
-        char *bidder = param2;
-        char *priceStr = param3;
-        printf("********************\n");
-        printf("%s B: console %s bidder %s price %s\n", commandNumber, consoleId, bidder, priceStr);
-        if (!consoleId || !bidder || !priceStr) {
-            printf("+ Error: Bid not possible\n");
-            return;
-        }
-        float newPrice = atof(priceStr);
-        tPosL pos = findItem(consoleId, *plist);
-        if (pos == LNULL) {
-            printf("+ Error: Bid not possible\n");
-            return;
-        }
-        tItemL item = getItem(pos, *plist);
-        if (strcmp(item.seller, bidder) == 0) {
-            printf("+ Error: Bid not possible\n");
-            return;
-        }
-        float currentPrice = item.consolePrice;
-        if (!isEmptyStack(*item.bidStack)) {
-            tItemS topBid = peek(*item.bidStack);
-            currentPrice = topBid.consolePrice;
-        }
-        if (newPrice <= currentPrice) {
-            printf("+ Error: Bid not possible\n");
-            return;
-        }
-        tItemS bid;
-        strcpy(bid.bidder, bidder);
-        bid.consolePrice = newPrice;
-        if (!push(bid, item.bidStack)) {
-            printf("+ Error: Bid not possible\n");
-            return;
-        }
-        item.bidCounter++;
-        updateItem(item, pos, plist);
-        char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-        printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n",
-               item.consoleId, bidder, brandStrOut, newPrice, item.bidCounter);
-    }
-    else if (command == 'A') {  // operacion award: formato "A consoleId"
-        char *consoleId = param1;
-        printf("********************\n");
-        printf("%s A: console %s\n", commandNumber, consoleId);
-        if (!consoleId) {
-            printf("+ Error: Award not possible\n");
-            return;
-        }
-        tPosL pos = findItem(consoleId, *plist);
-        if (pos == LNULL) {
-            printf("+ Error: Award not possible\n");
-            return;
-        }
-        tItemL item = getItem(pos, *plist);
-        if (isEmptyStack(*item.bidStack)) {
-            printf("+ Error: Award not possible\n");
-            return;
-        }
-        tItemS winningBid = peek(*item.bidStack);
-        char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-        printf("* Award: console %s bidder %s brand %s price %.2f\n",
-               item.consoleId, winningBid.bidder, brandStrOut, winningBid.consolePrice);
-        free(item.bidStack);
+    tPosL pos = findItem(consoleId, *plist);
+    if (pos == LNULL) {
+        printf("+ Error: Delete not possible\n");
+    } else {
+        brandStr
+        clearStack(&item.bidStack);   // vaciar la pila de pujas
+        item.bidCounter = 0;          // resetear el contador de pujas
         deleteAtPosition(pos, plist);
+        char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
+        printf("* Delete: console %s seller %s brand %s price %.2f bids %d\n",
+               item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
     }
-    else if (command == 'I') {  // operacion invalidatebids: formato "I"
-        printf("********************\n");
-        printf("%s I\n", commandNumber);
-        if (isEmptyList(*plist)) {
-            printf("+ Error: InvalidateBids not possible\n");
-            return;
-        }
-        int totalBids = 0, count = 0;
-        tPosL pos = first(*plist);
-        while (pos != LNULL) {
-            tItemL item = getItem(pos, *plist);
-            totalBids += item.bidCounter;
-            count++;
-            pos = next(pos, *plist);
-        }
-        float averageBids = (count > 0) ? (float)totalBids / count : 0;
-        int invalidated = 0;
-        pos = first(*plist);
-        while (pos != LNULL) {
-            tItemL item = getItem(pos, *plist);
-            if (item.bidCounter > 2 * averageBids) {
-                clearStack(item.bidStack);
-                int oldBids = item.bidCounter;
-                item.bidCounter = 0;
-                updateItem(item, pos, plist);
-                char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-                printf("* InvalidateBids: console %s seller %s brand %s price %.2f bids %d average bids %.2f\n",
-                       item.consoleId, item.seller, brandStrOut, item.consolePrice, oldBids, averageBids);
-                invalidated++;
-            }
-            pos = next(pos, *plist);
-        }
-        if (invalidated == 0)
-            printf("+ Error: InvalidateBids not possible\n");
+}
+else if (command == 'B') {  // operacion bid: formato "B consoleid bidder price"
+    char *consoleId = param1;
+    char *bidder    = param2;
+    char *priceStr  = param3;
+    // cabecera
+    printf("********************\n");
+    printf("%s B: console %s bidder %s price %.2f\n",
+           commandNumber, consoleId, bidder, atof(priceStr));
+    if (!consoleId || !bidder || !priceStr) {
+        printf("+ Error: Bid not possible\n");
+        return;
     }
-    else if (command == 'R') {  // operacion remove: formato "R"
-        printf("********************\n");
-        printf("%s R\n", commandNumber);
-        if (isEmptyList(*plist)) {
-            printf("+ Error: Remove not possible\n");
-            return;
-        }
-        int removed = 0;
-        tPosL pos = *plist;
-        tPosL prev = LNULL;
-        while (pos != LNULL) {
-            tItemL item = getItem(pos, *plist);
-            if (item.bidCounter == 0) {
-                char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-                printf("Removing console %s seller %s brand %s price %.2f bids %d\n",
-                       item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
-                removed++;
-                free(item.bidStack);
-                if (pos == *plist) {
-                    *plist = pos->next;
-                    free(pos);
-                    pos = *plist;
-                    prev = LNULL;
-                    continue;
-                } else {
-                    prev->next = pos->next;
-                    free(pos);
-                    pos = prev->next;
-                    continue;
-                }
-            }
-            prev = pos;
-            pos = next(pos, *plist);
-        }
-        if (removed == 0)
-            printf("+ Error: Remove not possible\n");
+    float newPrice = atof(priceStr);
+    tPosL pos = findItem(consoleId, *plist);
+    if (pos == LNULL) {
+        printf("+ Error: Bid not possible\n");
+        return;
     }
-    else if (command == 'S') {  // operacion stats: formato "S"
-        printf("********************\n");
-        printf("%s S\n", commandNumber);
-        if (isEmptyList(*plist)) {
-            printf("+ Error: Stats not possible\n");
-            return;
-        }
-        tPosL pos = first(*plist);
-        while (pos != LNULL) {
-            tItemL item = getItem(pos, *plist);
+    brandStr
+    if (strcmp(item.seller, bidder) == 0) {
+        printf("+ Error: Bid not possible\n");
+        return;
+    }
+    float currentPrice = item.consolePrice;
+    if (!isEmptyStack(item.bidStack)) {
+        tItemS topBid = peek(item.bidStack);
+        currentPrice = topBid.consolePrice;
+    }
+    if (newPrice <= currentPrice) {
+        printf("+ Error: Bid not possible\n");
+        return;
+    }
+    tItemS bid;
+    strcpy(bid.bidder, bidder);
+    bid.consolePrice = newPrice;
+    if (!push(bid, &item.bidStack)) {
+        printf("+ Error: Bid not possible\n");
+        return;
+    }
+    item.bidCounter++;
+    updateItem(item, pos, plist);
+    char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
+    printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n",
+           item.consoleId, bidder, brandStrOut, newPrice, item.bidCounter);
+    }
+    else if (command == 'A') {  // operacion award: formato "a consoleid"
+    char *consoleId = param1;
+    // cabecera
+    printf("********************\n");
+    printf("%s A: console %s\n", commandNumber, consoleId);
+    if (!consoleId) {
+        printf("+ Error: Award not possible\n");
+        return;
+    }
+    tPosL pos = findItem(consoleId, *plist);
+    if (pos == LNULL) {
+        printf("+ Error: Award not possible\n");
+        return;
+    }
+    brandStr
+    if (isEmptyStack(item.bidStack)) {
+        printf("+ Error: Award not possible\n");
+        return;
+    }
+    tItemS winningBid = peek(item.bidStack);
+    char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
+    printf("* Award: console %s bidder %s brand %s price %.2f\n",
+           item.consoleId, winningBid.bidder, brandStrOut, winningBid.consolePrice);
+    deleteAtPosition(pos, plist);
+}
+else if (command == 'I') {  // operacion invalidatebids: formato "i"
+    // cabecera
+    printf("********************\n");
+    printf("%s I\n", commandNumber);
+    if (isEmptyList(*plist)) {
+        printf("+ Error: InvalidateBids not possible\n");
+        return;
+    }
+    int totalBids = 0, count = 0;
+    tPosL pos = first(*plist);
+    while (pos != LNULL) {
+        brandStr
+        totalBids += item.bidCounter;
+        count++;
+        pos = next(pos, *plist);
+    }
+    float averageBids = (count > 0) ? (float)totalBids / count : 0;
+    int invalidated = 0;
+    pos = first(*plist);
+    while (pos != LNULL) {
+        brandStr
+        if (item.bidCounter > 2 * averageBids) {
+            clearStack(&item.bidStack);
+            int oldBids = item.bidCounter;
+            item.bidCounter = 0;
+            updateItem(item, pos, plist);
             char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-            if (!isEmptyStack(*item.bidStack))
-                printf("Console %s seller %s brand %s price %.2f bids %d top bidder %s\n",
-                       item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter, peek(*item.bidStack).bidder);
-            else
-                printf("Console %s seller %s brand %s price %.2f. No bids\n",
-                       item.consoleId, item.seller, brandStrOut, item.consolePrice);
-            pos = next(pos, *plist);
+            printf("* InvalidateBids: console %s seller %s brand %s price %.2f bids %d average bids %.2f\n",
+                   item.consoleId, item.seller, brandStrOut, item.consolePrice, oldBids, averageBids);
+            invalidated++;
         }
-        printf("\n");
-        int countNintendo = 0, countSega = 0;
-        float sumNintendo = 0, sumSega = 0;
-        pos = first(*plist);
-        while (pos != LNULL) {
-            tItemL item = getItem(pos, *plist);
-            if (item.consoleBrand == nintendo) {
-                countNintendo++;
-                sumNintendo += item.consolePrice;
-            } else if (item.consoleBrand == sega) {
-                countSega++;
-                sumSega += item.consolePrice;
-            }
-            pos = next(pos, *plist);
+        pos = next(pos, *plist);
+    }
+    if (invalidated == 0)
+        printf("+ Error: InvalidateBids not possible\n");
+}
+else if (command == 'R') {  // operacion remove: formato "r"
+    // cabecera
+    printf("********************\n");
+    printf("%s R\n", commandNumber);
+    if (isEmptyList(*plist)) {
+        printf("+ Error: Remove not possible\n");
+        return;
+    }
+    int removed = 0;
+    tPosL pos = first(*plist);
+    while (pos != LNULL) {
+        tPosL nextPos = next(pos, *plist);
+        brandStr
+        if (item.bidCounter == 0) {
+            char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
+            printf("Removing console %s seller %s brand %s price %.2f bids %d\n",
+                   item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
+            deleteAtPosition(pos, plist);
+            removed++;
         }
-        float avgNintendo = (countNintendo > 0) ? sumNintendo / countNintendo : 0;
-        float avgSega = (countSega > 0) ? sumSega / countSega : 0;
-        printf("Brand     Consoles    Price  Average\n");
-        printf("Nintendo  %8d %8.2f %8.2f\n", countNintendo, sumNintendo, avgNintendo);
-        printf("Sega      %8d %8.2f %8.2f\n", countSega, sumSega, avgSega);
-        pos = first(*plist);
-        tPosL topPos = LNULL;
-        float maxIncrease = 0;
-        while (pos != LNULL) {
-            tItemL item = getItem(pos, *plist);
-            if (!isEmptyStack(*item.bidStack)) {
-                tItemS topBid = peek(*item.bidStack);
-                float increase = ((topBid.consolePrice - item.consolePrice) / item.consolePrice) * 100;
-                if (increase > maxIncrease) {
-                    maxIncrease = increase;
-                    topPos = pos;
-                }
-            }
-            pos = next(pos, *plist);
-        }
-        if (topPos != LNULL) {
-            tItemL topItem = getItem(topPos, *plist);
-            tItemS topBid = peek(*topItem.bidStack);
-            char *brandStrOut = (topItem.consoleBrand == nintendo) ? "nintendo" : "sega";
-            printf("Top bid: console %s seller %s brand %s price %.2f bidder %s top price %.2f increase %.2f%%\n",
-                   topItem.consoleId, topItem.seller, brandStrOut, topItem.consolePrice,
-                   topBid.bidder, topBid.consolePrice, maxIncrease);
+        pos = nextPos;
+    }
+    if (removed == 0)
+        printf("+ Error: Remove not possible\n");
+}
+else if (command == 'S') {  // operacion stats: formato "s"
+    // cabecera
+    printf("********************\n");
+    printf("%s S\n", commandNumber);
+    if (isEmptyList(*plist)) {
+        printf("+ Error: Stats not possible\n");
+        return;
+    }
+    // listado de consolas
+    tPosL pos = first(*plist);
+    while (pos != LNULL) {
+        tItemL item = getItem(pos, *plist);
+        char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
+        if (!isEmptyStack(item.bidStack))
+            printf("Console %s seller %s brand %s price %.2f bids %d top bidder %s\n",
+                   item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter, peek(item.bidStack).bidder);
+        else
+            printf("Console %s seller %s brand %s price %.2f. No bids\n",
+                   item.consoleId, item.seller, brandStrOut, item.consolePrice);
+        pos = next(pos, *plist);
+    }
+    // estadisticas por marca
+    int countN = 0, countS = 0;
+    float sumN = 0, sumS = 0;
+    pos = first(*plist);
+    while (pos != LNULL) {
+        tItemL item = getItem(pos, *plist);
+        if (item.consoleBrand == nintendo) {
+            countN++;
+            sumN += item.consolePrice;
         } else {
-            printf("Top bid not possible\n");
+            countS++;
+            sumS += item.consolePrice;
         }
+        pos = next(pos, *plist);
     }
-    else {
-        printf("********************\n");
-        printf("%s ?\n", commandNumber);
+    float avgN = (countN > 0) ? sumN / countN : 0;
+    float avgS = (countS > 0) ? sumS / countS : 0;
+    printf("Brand     Consoles    Price  Average\n");
+    printf("Nintendo  %8d %8.2f %8.2f\n", countN, sumN, avgN);
+    printf("Sega      %8d %8.2f %8.2f\n", countS, sumS, avgS);
+    // top bid
+    float maxIncrease = 0;
+    tPosL topPos = LNULL;
+    pos = first(*plist);
+    while (pos != LNULL) {
+        tItemL item = getItem(pos, *plist);
+        if (!isEmptyStack(item.bidStack)) {
+            tItemS topBid = peek(item.bidStack);
+            float increase = ((topBid.consolePrice - item.consolePrice) / item.consolePrice) * 100;
+            if (increase > maxIncrease) {
+                maxIncrease = increase;
+                topPos = pos;
+            }
+        }
+        pos = next(pos, *plist);
     }
+    if (topPos != LNULL) {
+        tItemL topItem = getItem(topPos, *plist);
+        tItemS topBid = peek(topItem.bidStack);
+        char *brandStrOut = (topItem.consoleBrand == nintendo) ? "nintendo" : "sega";
+        printf("Top bid: console %s seller %s brand %s price %.2f bidder %s top price %.2f increase %.2f%%\n",
+               topItem.consoleId, topItem.seller, brandStrOut, topItem.consolePrice,
+               topBid.bidder, topBid.consolePrice, maxIncrease);
+    } else {
+        printf("Top bid not possible\n");
+    }
+}
+else {
+    // cabecera operacion desconocida
+    printf("********************\n");
+    printf("%s ?\n", commandNumber);
 }
 
 /*
