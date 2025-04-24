@@ -113,21 +113,26 @@ void Delete(int num,
     if (pos == LNULL) {
         printf("+ Error: Delete not possible\n");
     } else {
+        // obtenemos el item y guardamos el número de pujas actual
         tItemL item = getItem(pos, *plist);
+        int oldBids = item.bidCounter;
 
-        // vaciar y resetear antes de borrar
+        // vaciar pila y resetear contador
         clearStack(&item.bidStack);
         item.bidCounter = 0;
         updateItem(item, pos, plist);
 
+        // borramos el nodo
         deleteAtPosition(pos, plist);
 
+        // imprimimos usando el valor original oldBids
         char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
         printf("* Delete: console %s seller %s brand %s price %.2f bids %d\n",
                item.consoleId, item.seller, brandStrOut,
-               item.consolePrice, item.bidCounter);
+               item.consolePrice, oldBids);
     }
 }
+
 
 /*
  * Bid: puja por una consola.
@@ -409,7 +414,7 @@ void Stats(int num,
     float avgN = (countN > 0) ? sumN / countN : 0;
     float avgS = (countS > 0) ? sumS / countS : 0;
 
-    printf("Brand     Consoles    Price  Average\n");
+    printf("\nBrand     Consoles    Price  Average\n");
     printf("Nintendo  %8d %8.2f %8.2f\n", countN, sumN, avgN);
     printf("Sega      %8d %8.2f %8.2f\n", countS, sumS, avgS);
 
@@ -445,55 +450,46 @@ void Stats(int num,
 
 
 /*
- * processcommand: procesa una peticion de la plataforma de subastas.
+ * processCommand: procesa una petición de la plataforma de subastas.
  * entradas:
- *   - commandnumber: char*, numero de la peticion.
- *   - command: char, tipo de operacion.
- *   - param1, param2, param3, param4: char*, parametros asociados a la operacion.
+ *   - commandNumber: char*, número de la petición.
+ *   - command: char, tipo de operación ('N', 'D', 'B', 'A', 'I', 'R', 'S').
+ *   - param1, param2, param3, param4: char*, parámetros genéricos según la operación:
+ *       • 'N': param1=consoleId, param2=seller,     param3=brand,   param4=price
+ *       • 'D': param1=consoleId
+ *       • 'B': param1=consoleId, param2=bidder,     param3=price
+ *       • 'A': param1=consoleId
+ *       • 'I', 'R', 'S': sin parámetros adicionales
  *   - plist: tList*, puntero a la lista de consolas.
  * salida:
- *   se imprime la cabecera y se ejecuta la operacion correspondiente.
- * pre: los parametros deben ser validos segun la operacion.
- * post: se muestra en pantalla la cabecera y el resultado de la operacion.
- * variables:
- *   - commandNumber: char*, numero de la peticion.
- *   - command: char, tipo de operacion.
- *   - param1, param2, param3, param4: char*, parametros de la operacion.
- *   - consoleId: char*, identificador de la consola.
- *   - userId: char*, identificador del usuario.
- *   - brandStr: char*, marca de la consola.
- *   - priceStr: char*, precio de la consola.
- *   - brand: tConsoleBrand, enumeracion que representa la marca de la consola.
- *   - price: float, precio de la consola.
- *   - pos: tPosL, posicion en la lista.
- *   - item: tItemL, elemento de la lista.
- *   - brandStrOut: char*, cadena que representa la marca de la consola.
+ *   - imprime la cabecera de la petición y el resultado de la operación correspondiente.
+ * precondiciones:
+ *   - el puntero plist debe apuntar a una lista inicializada.
+ *   - los parámetros (param1…param4) han de estar presentes según el formato de cada operación.
+ * postcondiciones:
+ *   - se ejecuta la función asociada y se muestra su resultado.
  */
 void processCommand(char *commandNumber, char command,
                     char *param1, char *param2,
                     char *param3, char *param4,
                     tList *plist) {
-    char *consoleId    = param1;
-    char *sellerOrBidder = param2;
-    char *brandStr     = param3;
-    char *priceStr     = param4;
-    int   num          = atoi(commandNumber);
+    int num = atoi(commandNumber);
 
     switch (command) {
         case 'N':  // operacion new: formato "N consoleid seller brand price"
-            New(num, consoleId, sellerOrBidder, brandStr, priceStr, plist);
+            New(num, param1, param2, param3, param4, plist);
             break;
 
         case 'D':  // operacion delete: formato "D consoleid"
-            Delete(num, consoleId, plist);
+            Delete(num, param1, plist);
             break;
 
         case 'B':  // operacion bid: formato "B consoleid bidder price"
-            Bid(num, consoleId, sellerOrBidder, priceStr, plist);
+            Bid(num, param1, param2, param3, plist);
             break;
 
         case 'A':  // operacion award: formato "A consoleid"
-            Award(num, consoleId, plist);
+            Award(num, param1, plist);
             break;
 
         case 'I':  // operacion invalidatebids: formato "I"
