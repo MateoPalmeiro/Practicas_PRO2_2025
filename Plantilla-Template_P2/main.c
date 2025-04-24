@@ -49,8 +49,9 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
 
     // cabecera
     printf("********************\n");
-    printf("%s N: console %s seller %s brand %s price %.2f\n",
-           commandNumber, consoleId, seller, brandStr, atof(priceStr));
+    int num = atoi(commandNumber);    
+    printf("%02d N: console %s seller %s brand %s price %.2f\n",
+           num, consoleId, seller, brandStr, atof(priceStr));
 
     // validacion basica de parametros
     if (!consoleId || !seller || !brandStr || !priceStr) {
@@ -91,11 +92,14 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
         printf("+ Error: New not possible\n");
         }
     }
+
     else if (command == 'D') {  // operacion delete: formato "D consoleid"
     char *consoleId = param1;
+        
     // cabecera
     printf("********************\n");
-    printf("%s D: console %s\n", commandNumber, consoleId);
+    int num = atoi(commandNumber);
+    printf("%02d D: console %s\n", num, consoleId);
     if (!consoleId) {
         printf("+ Error: Delete not possible\n");
         return;
@@ -104,9 +108,10 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
     if (pos == LNULL) {
         printf("+ Error: Delete not possible\n");
     } else {
-        brandStr
+        tItemL item = getItem(pos, *plist);
         clearStack(&item.bidStack);   // vaciar la pila de pujas
         item.bidCounter = 0;          // resetear el contador de pujas
+        updateItem(item, pos, plist);
         deleteAtPosition(pos, plist);
         char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
         printf("* Delete: console %s seller %s brand %s price %.2f bids %d\n",
@@ -119,8 +124,9 @@ else if (command == 'B') {  // operacion bid: formato "B consoleid bidder price"
     char *priceStr  = param3;
     // cabecera
     printf("********************\n");
-    printf("%s B: console %s bidder %s price %.2f\n",
-           commandNumber, consoleId, bidder, atof(priceStr));
+    int num = atoi(commandNumber);
+    printf("%02d B: console %s bidder %s price %.2f\n",
+           num, consoleId, bidder, atof(priceStr));
     if (!consoleId || !bidder || !priceStr) {
         printf("+ Error: Bid not possible\n");
         return;
@@ -131,7 +137,7 @@ else if (command == 'B') {  // operacion bid: formato "B consoleid bidder price"
         printf("+ Error: Bid not possible\n");
         return;
     }
-    brandStr
+    tItemL item = getItem(pos, *plist);
     if (strcmp(item.seller, bidder) == 0) {
         printf("+ Error: Bid not possible\n");
         return;
@@ -158,11 +164,12 @@ else if (command == 'B') {  // operacion bid: formato "B consoleid bidder price"
     printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n",
            item.consoleId, bidder, brandStrOut, newPrice, item.bidCounter);
     }
-    else if (command == 'A') {  // operacion award: formato "a consoleid"
+    else if (command == 'A') {  // operacion award: formato "A consoleid"
     char *consoleId = param1;
     // cabecera
     printf("********************\n");
-    printf("%s A: console %s\n", commandNumber, consoleId);
+    int num = atoi(commandNumber);
+    printf("%02d A: console %s\n", num, consoleId);
     if (!consoleId) {
         printf("+ Error: Award not possible\n");
         return;
@@ -172,7 +179,7 @@ else if (command == 'B') {  // operacion bid: formato "B consoleid bidder price"
         printf("+ Error: Award not possible\n");
         return;
     }
-    brandStr
+    tItemL item = getItem(pos, *plist);
     if (isEmptyStack(item.bidStack)) {
         printf("+ Error: Award not possible\n");
         return;
@@ -183,10 +190,11 @@ else if (command == 'B') {  // operacion bid: formato "B consoleid bidder price"
            item.consoleId, winningBid.bidder, brandStrOut, winningBid.consolePrice);
     deleteAtPosition(pos, plist);
 }
-else if (command == 'I') {  // operacion invalidatebids: formato "i"
+else if (command == 'I') {  // operacion invalidatebids: formato "I"
     // cabecera
     printf("********************\n");
-    printf("%s I\n", commandNumber);
+    int num = atoi(commandNumber);
+    printf("%02d I\n", num);
     if (isEmptyList(*plist)) {
         printf("+ Error: InvalidateBids not possible\n");
         return;
@@ -194,7 +202,7 @@ else if (command == 'I') {  // operacion invalidatebids: formato "i"
     int totalBids = 0, count = 0;
     tPosL pos = first(*plist);
     while (pos != LNULL) {
-        brandStr
+        tItemL item = getItem(pos, *plist);
         totalBids += item.bidCounter;
         count++;
         pos = next(pos, *plist);
@@ -203,7 +211,7 @@ else if (command == 'I') {  // operacion invalidatebids: formato "i"
     int invalidated = 0;
     pos = first(*plist);
     while (pos != LNULL) {
-        brandStr
+        tItemL item = getItem(pos, *plist);
         if (item.bidCounter > 2 * averageBids) {
             clearStack(&item.bidStack);
             int oldBids = item.bidCounter;
@@ -219,10 +227,11 @@ else if (command == 'I') {  // operacion invalidatebids: formato "i"
     if (invalidated == 0)
         printf("+ Error: InvalidateBids not possible\n");
 }
-else if (command == 'R') {  // operacion remove: formato "r"
+else if (command == 'R') {  // operacion remove: formato "R"
     // cabecera
     printf("********************\n");
-    printf("%s R\n", commandNumber);
+    int num = atoi(commandNumber);
+    printf("%02d R\n", num);
     if (isEmptyList(*plist)) {
         printf("+ Error: Remove not possible\n");
         return;
@@ -231,7 +240,7 @@ else if (command == 'R') {  // operacion remove: formato "r"
     tPosL pos = first(*plist);
     while (pos != LNULL) {
         tPosL nextPos = next(pos, *plist);
-        brandStr
+        tItemL item = getItem(pos, *plist);
         if (item.bidCounter == 0) {
             char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
             printf("Removing console %s seller %s brand %s price %.2f bids %d\n",
@@ -247,7 +256,8 @@ else if (command == 'R') {  // operacion remove: formato "r"
 else if (command == 'S') {  // operacion stats: formato "s"
     // cabecera
     printf("********************\n");
-    printf("%s S\n", commandNumber);
+    int num = atoi(commandNumber);
+    printf("%02d S\n", num);
     if (isEmptyList(*plist)) {
         printf("+ Error: Stats not possible\n");
         return;
@@ -315,7 +325,8 @@ else if (command == 'S') {  // operacion stats: formato "s"
 else {
     // cabecera operacion desconocida
     printf("********************\n");
-    printf("%s ?\n", commandNumber);
+    int num = atoi(commandNumber);
+    printf("%02d ?\n", num);
 }
 
 /*
