@@ -16,48 +16,39 @@ GROUP: 4.3    DATE: 24/04/2025
 #define MAX_BUFFER 255
 
 /*
- * processcommand: procesa una peticion de la plataforma de subastas.
+ * New: alta de una nueva consola.
  * entradas:
- *   - commandnumber: char*, numero de la peticion.
- *   - command: char, tipo de operacion.
- *   - param1, param2, param3, param4: char*, parametros asociados a la operacion.
- *   - plist: tList*, puntero a la lista de consolas.
- * salida:
- *   se imprime la cabecera y se ejecuta la operacion correspondiente.
- * pre: los parametros deben ser validos segun la operacion.
- * post: se muestra en pantalla la cabecera y el resultado de la operacion.
- * variables:
- *   - commandNumber: char*, numero de la peticion.
- *   - command: char, tipo de operacion.
- *   - param1, param2, param3, param4: char*, parametros de la operacion.
- *   - consoleId: char*, identificador de la consola.
- *   - userId: char*, identificador del usuario.
- *   - brandStr: char*, marca de la consola.
- *   - priceStr: char*, precio de la consola.
- *   - brand: tConsoleBrand, enumeracion que representa la marca de la consola.
- *   - price: float, precio de la consola.
- *   - pos: tPosL, posicion en la lista.
- *   - item: tItemL, elemento de la lista.
- *   - brandStrOut: char*, cadena que representa la marca de la consola.
+ *   - num: numero de la peticion.
+ *   - consoleId: identificador de la consola.
+ *   - seller: identificador del vendedor.
+ *   - brandStr: marca de la consola.
+ *   - priceStr: precio de la consola (cadena).
+ *   - plist: puntero a la lista de consolas.
+ * salidas:
+ *   - imprime la cabecera y el resultado de la operacion.
+ * precondiciones:
+ *   - plist apunta a una lista inicializada.
+ * postcondiciones:
+ *   - si es exitosa, la consola se inserta en la lista con su pila vacia.
  */
-void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList *plist) {
-    if (command == 'N') {  // operacion new: formato "N consoleid seller brand price"
-    char *consoleId = param1;
-    char *seller    = param2;
-    char *brandStr  = param3;
-    char *priceStr  = param4;
-
+void New(int num,
+         char *consoleId,
+         char *seller,
+         char *brandStr,
+         char *priceStr,
+         tList *plist)
+{
     // cabecera
     printf("********************\n");
-    int num = atoi(commandNumber);    
-    printf("%02d N: console %s seller %s brand %s price %.2f\n",
-           num, consoleId, seller, brandStr, atof(priceStr));
+    printf("%02d N: console %s seller %s brand %s price %s\n",
+           num, consoleId, seller, brandStr, priceStr);
 
     // validacion basica de parametros
     if (!consoleId || !seller || !brandStr || !priceStr) {
         printf("+ Error: New not possible\n");
         return;
     }
+
     // no puede existir ya la consola
     if (findItem(consoleId, *plist) != LNULL) {
         printf("+ Error: New not possible\n");
@@ -85,120 +76,203 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
     createEmptyStack(&item.bidStack);
 
     // intentar insertar en la lista
-    if (insertItem(item, plist)) {
+    if (insertItem(item, plist))
         printf("* New: console %s seller %s brand %s price %.2f\n",
                item.consoleId, item.seller, brandStr, item.consolePrice);
-    } else {
+    else
         printf("+ Error: New not possible\n");
-        }
-    }
+}
 
-    else if (command == 'D') {  // operacion delete: formato "D consoleid"
-    char *consoleId = param1;
-        
+/*
+ * Delete: baja de una consola.
+ * entradas:
+ *   - num: numero de la peticion.
+ *   - consoleId: identificador de la consola.
+ *   - plist: puntero a la lista de consolas.
+ * salidas:
+ *   - imprime la cabecera y el resultado de la operacion.
+ * precondiciones:
+ *   - plist apunta a una lista inicializada.
+ * postcondiciones:
+ *   - si es exitosa, la consola y su pila se eliminan.
+ */
+void Delete(int num,
+            char *consoleId,
+            tList *plist)
+{
     // cabecera
     printf("********************\n");
-    int num = atoi(commandNumber);
     printf("%02d D: console %s\n", num, consoleId);
+
     if (!consoleId) {
         printf("+ Error: Delete not possible\n");
         return;
     }
+
     tPosL pos = findItem(consoleId, *plist);
     if (pos == LNULL) {
         printf("+ Error: Delete not possible\n");
     } else {
         tItemL item = getItem(pos, *plist);
-        clearStack(&item.bidStack);   // vaciar la pila de pujas
-        item.bidCounter = 0;          // resetear el contador de pujas
+
+        // vaciar y resetear antes de borrar
+        clearStack(&item.bidStack);
+        item.bidCounter = 0;
         updateItem(item, pos, plist);
+
         deleteAtPosition(pos, plist);
+
         char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
         printf("* Delete: console %s seller %s brand %s price %.2f bids %d\n",
-               item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
+               item.consoleId, item.seller, brandStrOut,
+               item.consolePrice, item.bidCounter);
     }
 }
-else if (command == 'B') {  // operacion bid: formato "B consoleid bidder price"
-    char *consoleId = param1;
-    char *bidder    = param2;
-    char *priceStr  = param3;
+
+/*
+ * Bid: puja por una consola.
+ * entradas:
+ *   - num: numero de la peticion.
+ *   - consoleId: identificador de la consola.
+ *   - bidder: identificador del pujador.
+ *   - priceStr: precio de la puja (cadena).
+ *   - plist: puntero a la lista de consolas.
+ * salidas:
+ *   - imprime la cabecera y el resultado de la operacion.
+ * precondiciones:
+ *   - plist apunta a una lista inicializada.
+ * postcondiciones:
+ *   - si es exitosa, se apila la puja y se incrementa bidCounter.
+ */
+void Bid(int num,
+         char *consoleId,
+         char *bidder,
+         char *priceStr,
+         tList *plist)
+{
     // cabecera
     printf("********************\n");
-    int num = atoi(commandNumber);
-    printf("%02d B: console %s bidder %s price %.2f\n",
-           num, consoleId, bidder, atof(priceStr));
+    printf("%02d B: console %s bidder %s price %s\n",
+           num, consoleId, bidder, priceStr);
+
     if (!consoleId || !bidder || !priceStr) {
         printf("+ Error: Bid not possible\n");
         return;
     }
+
     float newPrice = atof(priceStr);
     tPosL pos = findItem(consoleId, *plist);
     if (pos == LNULL) {
         printf("+ Error: Bid not possible\n");
         return;
     }
+
     tItemL item = getItem(pos, *plist);
     if (strcmp(item.seller, bidder) == 0) {
         printf("+ Error: Bid not possible\n");
         return;
     }
+
     float currentPrice = item.consolePrice;
     if (!isEmptyStack(item.bidStack)) {
         tItemS topBid = peek(item.bidStack);
         currentPrice = topBid.consolePrice;
     }
+
     if (newPrice <= currentPrice) {
         printf("+ Error: Bid not possible\n");
         return;
     }
+
     tItemS bid;
     strcpy(bid.bidder, bidder);
     bid.consolePrice = newPrice;
+
     if (!push(bid, &item.bidStack)) {
         printf("+ Error: Bid not possible\n");
         return;
     }
+
     item.bidCounter++;
     updateItem(item, pos, plist);
+
     char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
     printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n",
-           item.consoleId, bidder, brandStrOut, newPrice, item.bidCounter);
-    }
-    else if (command == 'A') {  // operacion award: formato "A consoleid"
-    char *consoleId = param1;
+           item.consoleId, bidder, brandStrOut,
+           newPrice, item.bidCounter);
+}
+
+/*
+ * Award: asigna el ganador de la puja.
+ * entradas:
+ *   - num: numero de la peticion.
+ *   - consoleId: identificador de la consola.
+ *   - plist: puntero a la lista de consolas.
+ * salidas:
+ *   - imprime la cabecera y el resultado de la operacion.
+ * precondiciones:
+ *   - plist apunta a una lista inicializada.
+ * postcondiciones:
+ *   - si es exitosa, se elimina la consola.
+ */
+void Award(int num,
+           char *consoleId,
+           tList *plist)
+{
     // cabecera
     printf("********************\n");
-    int num = atoi(commandNumber);
     printf("%02d A: console %s\n", num, consoleId);
+
     if (!consoleId) {
         printf("+ Error: Award not possible\n");
         return;
     }
+
     tPosL pos = findItem(consoleId, *plist);
     if (pos == LNULL) {
         printf("+ Error: Award not possible\n");
         return;
     }
+
     tItemL item = getItem(pos, *plist);
     if (isEmptyStack(item.bidStack)) {
         printf("+ Error: Award not possible\n");
         return;
     }
+
     tItemS winningBid = peek(item.bidStack);
     char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
     printf("* Award: console %s bidder %s brand %s price %.2f\n",
-           item.consoleId, winningBid.bidder, brandStrOut, winningBid.consolePrice);
+           item.consoleId, winningBid.bidder, brandStrOut,
+           winningBid.consolePrice);
+
     deleteAtPosition(pos, plist);
 }
-else if (command == 'I') {  // operacion invalidatebids: formato "I"
+
+/*
+ * InvalidateBids: invalida pujas excesivas.
+ * entradas:
+ *   - num: numero de la peticion.
+ *   - plist: puntero a la lista de consolas.
+ * salidas:
+ *   - imprime la cabecera y los resultados.
+ * precondiciones:
+ *   - plist apunta a una lista inicializada.
+ * postcondiciones:
+ *   - si es exitosa, se vacian las pilas que superen 2*media.
+ */
+void InvalidateBids(int num,
+                    tList *plist)
+{
     // cabecera
     printf("********************\n");
-    int num = atoi(commandNumber);
     printf("%02d I\n", num);
+
     if (isEmptyList(*plist)) {
         printf("+ Error: InvalidateBids not possible\n");
         return;
     }
+
     int totalBids = 0, count = 0;
     tPosL pos = first(*plist);
     while (pos != LNULL) {
@@ -207,8 +281,10 @@ else if (command == 'I') {  // operacion invalidatebids: formato "I"
         count++;
         pos = next(pos, *plist);
     }
+
     float averageBids = (count > 0) ? (float)totalBids / count : 0;
     int invalidated = 0;
+
     pos = first(*plist);
     while (pos != LNULL) {
         tItemL item = getItem(pos, *plist);
@@ -219,23 +295,41 @@ else if (command == 'I') {  // operacion invalidatebids: formato "I"
             updateItem(item, pos, plist);
             char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
             printf("* InvalidateBids: console %s seller %s brand %s price %.2f bids %d average bids %.2f\n",
-                   item.consoleId, item.seller, brandStrOut, item.consolePrice, oldBids, averageBids);
+                   item.consoleId, item.seller, brandStrOut,
+                   item.consolePrice, oldBids, averageBids);
             invalidated++;
         }
         pos = next(pos, *plist);
     }
+
     if (invalidated == 0)
         printf("+ Error: InvalidateBids not possible\n");
 }
-else if (command == 'R') {  // operacion remove: formato "R"
+
+/*
+ * Remove: elimina consolas sin pujas.
+ * entradas:
+ *   - num: numero de la peticion.
+ *   - plist: puntero a la lista de consolas.
+ * salidas:
+ *   - imprime la cabecera y los resultados.
+ * precondiciones:
+ *   - plist apunta a una lista inicializada.
+ * postcondiciones:
+ *   - si es exitosa, se eliminan todos los nodos con bidCounter==0.
+ */
+void Remove(int num,
+            tList *plist)
+{
     // cabecera
     printf("********************\n");
-    int num = atoi(commandNumber);
     printf("%02d R\n", num);
+
     if (isEmptyList(*plist)) {
         printf("+ Error: Remove not possible\n");
         return;
     }
+
     int removed = 0;
     tPosL pos = first(*plist);
     while (pos != LNULL) {
@@ -244,37 +338,59 @@ else if (command == 'R') {  // operacion remove: formato "R"
         if (item.bidCounter == 0) {
             char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
             printf("Removing console %s seller %s brand %s price %.2f bids %d\n",
-                   item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter);
+                   item.consoleId, item.seller, brandStrOut,
+                   item.consolePrice, item.bidCounter);
             deleteAtPosition(pos, plist);
             removed++;
         }
         pos = nextPos;
     }
+
     if (removed == 0)
         printf("+ Error: Remove not possible\n");
 }
-else if (command == 'S') {  // operacion stats: formato "s"
+
+/*
+ * Stats: muestra estadisticas y listado de consolas.
+ * entradas:
+ *   - num: numero de la peticion.
+ *   - plist: puntero a la lista de consolas.
+ * salidas:
+ *   - imprime cabecera, listado, estadisticas y top bid.
+ * precondiciones:
+ *   - plist apunta a una lista inicializada.
+ * postcondiciones:
+ *   - no modifica la lista.
+ */
+void Stats(int num,
+           tList *plist)
+{
     // cabecera
     printf("********************\n");
-    int num = atoi(commandNumber);
     printf("%02d S\n", num);
+
     if (isEmptyList(*plist)) {
         printf("+ Error: Stats not possible\n");
         return;
     }
+
     // listado de consolas
     tPosL pos = first(*plist);
     while (pos != LNULL) {
         tItemL item = getItem(pos, *plist);
         char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
-        if (!isEmptyStack(item.bidStack))
+        if (!isEmptyStack(item.bidStack)) {
             printf("Console %s seller %s brand %s price %.2f bids %d top bidder %s\n",
-                   item.consoleId, item.seller, brandStrOut, item.consolePrice, item.bidCounter, peek(item.bidStack).bidder);
-        else
+                   item.consoleId, item.seller, brandStrOut,
+                   item.consolePrice, item.bidCounter, peek(item.bidStack).bidder);
+        } else {
             printf("Console %s seller %s brand %s price %.2f. No bids\n",
-                   item.consoleId, item.seller, brandStrOut, item.consolePrice);
+                   item.consoleId, item.seller, brandStrOut,
+                   item.consolePrice);
+        }
         pos = next(pos, *plist);
     }
+
     // estadisticas por marca
     int countN = 0, countS = 0;
     float sumN = 0, sumS = 0;
@@ -292,9 +408,11 @@ else if (command == 'S') {  // operacion stats: formato "s"
     }
     float avgN = (countN > 0) ? sumN / countN : 0;
     float avgS = (countS > 0) ? sumS / countS : 0;
+
     printf("Brand     Consoles    Price  Average\n");
     printf("Nintendo  %8d %8.2f %8.2f\n", countN, sumN, avgN);
     printf("Sega      %8d %8.2f %8.2f\n", countS, sumS, avgS);
+
     // top bid
     float maxIncrease = 0;
     tPosL topPos = LNULL;
@@ -311,22 +429,90 @@ else if (command == 'S') {  // operacion stats: formato "s"
         }
         pos = next(pos, *plist);
     }
+
     if (topPos != LNULL) {
         tItemL topItem = getItem(topPos, *plist);
         tItemS topBid = peek(topItem.bidStack);
         char *brandStrOut = (topItem.consoleBrand == nintendo) ? "nintendo" : "sega";
         printf("Top bid: console %s seller %s brand %s price %.2f bidder %s top price %.2f increase %.2f%%\n",
-               topItem.consoleId, topItem.seller, brandStrOut, topItem.consolePrice,
-               topBid.bidder, topBid.consolePrice, maxIncrease);
+               topItem.consoleId, topItem.seller, brandStrOut,
+               topItem.consolePrice, topBid.bidder, topBid.consolePrice,
+               maxIncrease);
     } else {
         printf("Top bid not possible\n");
     }
 }
-else {
-    // cabecera operacion desconocida
-    printf("********************\n");
-    int num = atoi(commandNumber);
-    printf("%02d ?\n", num);
+
+
+/*
+ * processcommand: procesa una peticion de la plataforma de subastas.
+ * entradas:
+ *   - commandnumber: char*, numero de la peticion.
+ *   - command: char, tipo de operacion.
+ *   - param1, param2, param3, param4: char*, parametros asociados a la operacion.
+ *   - plist: tList*, puntero a la lista de consolas.
+ * salida:
+ *   se imprime la cabecera y se ejecuta la operacion correspondiente.
+ * pre: los parametros deben ser validos segun la operacion.
+ * post: se muestra en pantalla la cabecera y el resultado de la operacion.
+ * variables:
+ *   - commandNumber: char*, numero de la peticion.
+ *   - command: char, tipo de operacion.
+ *   - param1, param2, param3, param4: char*, parametros de la operacion.
+ *   - consoleId: char*, identificador de la consola.
+ *   - userId: char*, identificador del usuario.
+ *   - brandStr: char*, marca de la consola.
+ *   - priceStr: char*, precio de la consola.
+ *   - brand: tConsoleBrand, enumeracion que representa la marca de la consola.
+ *   - price: float, precio de la consola.
+ *   - pos: tPosL, posicion en la lista.
+ *   - item: tItemL, elemento de la lista.
+ *   - brandStrOut: char*, cadena que representa la marca de la consola.
+ */
+void processCommand(char *commandNumber, char command,
+                    char *param1, char *param2,
+                    char *param3, char *param4,
+                    tList *plist) {
+    char *consoleId    = param1;
+    char *sellerOrBidder = param2;
+    char *brandStr     = param3;
+    char *priceStr     = param4;
+    int   num          = atoi(commandNumber);
+
+    switch (command) {
+        case 'N':  // operacion new: formato "N consoleid seller brand price"
+            New(num, consoleId, sellerOrBidder, brandStr, priceStr, plist);
+            break;
+
+        case 'D':  // operacion delete: formato "D consoleid"
+            Delete(num, consoleId, plist);
+            break;
+
+        case 'B':  // operacion bid: formato "B consoleid bidder price"
+            Bid(num, consoleId, sellerOrBidder, priceStr, plist);
+            break;
+
+        case 'A':  // operacion award: formato "A consoleid"
+            Award(num, consoleId, plist);
+            break;
+
+        case 'I':  // operacion invalidatebids: formato "I"
+            InvalidateBids(num, plist);
+            break;
+
+        case 'R':  // operacion remove: formato "R"
+            Remove(num, plist);
+            break;
+
+        case 'S':  // operacion stats: formato "S"
+            Stats(num, plist);
+            break;
+
+        default:   // operacion desconocida
+            printf("********************\n");
+            printf("%02d ?\n", num);
+            break;
+    }
 }
 
 /*
@@ -341,29 +527,29 @@ else {
  *   - delimiters: const char[], delimitadores para separar los parámetros.
  *   - buffer: char[], buffer para leer las líneas del archivo.
  */
-void readTasks(char *filename, tList *plist) {
-    FILE *f = NULL;
-    char *commandNumber, *command, *param1, *param2, *param3, *param4;
-    const char delimiters[] = " \n\r";
-    char buffer[MAX_BUFFER];
+    void readTasks(char *filename, tList *plist) {
+        FILE *f = NULL;
+        char *commandNumber, *command, *param1, *param2, *param3, *param4;
+        const char delimiters[] = " \n\r";
+        char buffer[MAX_BUFFER];
 
-    f = fopen(filename, "r");
-    if (f != NULL) {
-        while (fgets(buffer, MAX_BUFFER, f)) {
-            commandNumber = strtok(buffer, delimiters);
-            command = strtok(NULL, delimiters);
-            param1 = strtok(NULL, delimiters);
-            param2 = strtok(NULL, delimiters);
-            param3 = strtok(NULL, delimiters);
-            param4 = strtok(NULL, delimiters);
-            if (command != NULL)
-                processCommand(commandNumber, command[0], param1, param2, param3, param4, plist);
+        f = fopen(filename, "r");
+        if (f != NULL) {
+            while (fgets(buffer, MAX_BUFFER, f)) {
+                commandNumber = strtok(buffer, delimiters);
+                command = strtok(NULL, delimiters);
+                param1 = strtok(NULL, delimiters);
+                param2 = strtok(NULL, delimiters);
+                param3 = strtok(NULL, delimiters);
+                param4 = strtok(NULL, delimiters);
+                if (command != NULL)
+                    processCommand(commandNumber, command[0], param1, param2, param3, param4, plist);
+            }
+            fclose(f);
+        } else {
+            printf("cannot open file %s.\n", filename);
         }
-        fclose(f);
-    } else {
-        printf("cannot open file %s.\n", filename);
     }
-}
 
 /*
  * main: función principal.
@@ -375,18 +561,18 @@ void readTasks(char *filename, tList *plist) {
  *   - file_name: char*, nombre del fichero de peticiones.
  *   - list: tList, lista de consolas.
  */
-int main(int nargs, char **args) {
-    char *file_name = "bid.txt";
-    if (nargs > 1) {
-        file_name = args[1];
-    }
+    int main(int nargs, char **args) {
+        char *file_name = "bid.txt";
+        if (nargs > 1) {
+            file_name = args[1];
+        }
 #ifdef INPUT_FILE
-    else {
-        file_name = INPUT_FILE;
-    }
+        else {
+            file_name = INPUT_FILE;
+        }
 #endif
-    tList list;
-    createEmptyList(&list);
-    readTasks(file_name, &list);
-    return 0;
-}
+        tList list;
+        createEmptyList(&list);
+        readTasks(file_name, &list);
+        return 0;
+    }
