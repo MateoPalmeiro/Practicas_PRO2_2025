@@ -22,7 +22,7 @@ typedef struct sNode {
 
 // la lista se representa como un puntero al primer nodo
 typedef tNode* tList;
-// la posicion en la lista es un puntero al nodo
+// la posición en la lista es un puntero al nodo
 typedef tNode* tPosL;
 
 /*
@@ -34,7 +34,7 @@ typedef tNode* tPosL;
  * Precondiciones:
  * - list debe ser un puntero válido a tList.
  * Postcondiciones:
- * - Queda una lista vacía
+ * - Queda una lista vacía.
  */
 void createEmptyList(tList *list);
 
@@ -70,7 +70,7 @@ tPosL first(tList list);
  * Entradas:
  * - list: tList, lista de la cual se obtendrá la última posición.
  * Salidas:
- * - El último nodo de la lista
+ * - El último nodo de la lista.
  * Precondiciones:
  * - La lista no debe estar vacía.
  * Postcondiciones:
@@ -120,7 +120,7 @@ tPosL previous(tPosL pos, tList list);
  * Precondiciones:
  * - La lista debe estar inicializada.
  * Postcondiciones:
- * - Las posiciones posteriores cambian de posición
+ * - Las posiciones posteriores cambian de posición.
  */
 bool insertItem(tItemL item, tList *list);
 
@@ -134,7 +134,7 @@ bool insertItem(tItemL item, tList *list);
  * Precondiciones:
  * - pos debe ser una posición válida.
  * Postcondiciones:
- * - Las posiciones posteriores cambian de posición
+ * - Las posiciones posteriores cambian de posición.
  */
 void deleteAtPosition(tPosL pos, tList *list);
 
@@ -170,7 +170,7 @@ void updateItem(tItemL item, tPosL pos, tList *list);
 /*
  * Objetivo: Busca el primer elemento cuyo consoleId coincide con el dado.
  * Entradas:
- * - consoleId: tConsoleId, identificador que se buscará en la lista.
+ * - consoleId: const char*, identificador que se buscará en la lista.
  * - list: tList, lista en la que se buscará el elemento.
  * Salidas:
  * - La posición del elemento si se encuentra.
@@ -180,6 +180,6 @@ void updateItem(tItemL item, tPosL pos, tList *list);
  * Postcondiciones:
  * - Ninguna.
  */
-tPosL findItem(tConsoleId consoleId, tList list);
+tPosL findItem(const char *consoleId, tList list);
 
 #endif
