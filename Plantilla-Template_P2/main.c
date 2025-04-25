@@ -160,11 +160,13 @@ void Bid(int num,
     printf("%02d B: console %s bidder %s price %s\n",
            num, consoleId, bidder, priceStr);
 
+    // validacion basica de parametros
     if (!consoleId || !bidder || !priceStr) {
         printf("+ Error: Bid not possible\n");
         return;
     }
 
+    // conversion de precio
     float newPrice = atof(priceStr);
     tPosL pos = findItem(consoleId, *plist);
     if (pos == LNULL) {
@@ -172,12 +174,14 @@ void Bid(int num,
         return;
     }
 
+    // obtencion del item
     tItemL item = getItem(pos, *plist);
     if (strcmp(item.seller, bidder) == 0) {
         printf("+ Error: Bid not possible\n");
         return;
     }
 
+    // validacion de precio
     float currentPrice = item.consolePrice;
     if (!isEmptyStack(item.bidStack)) {
         tItemS topBid = peek(item.bidStack);
@@ -189,18 +193,22 @@ void Bid(int num,
         return;
     }
 
+    // construccion de la puja
     tItemS bid;
     strcpy(bid.bidder, bidder);
     bid.consolePrice = newPrice;
 
+    // apilar la puja
     if (!push(bid, &item.bidStack)) {
         printf("+ Error: Bid not possible\n");
         return;
     }
 
+    // actualizacion del item
     item.bidCounter++;
     updateItem(item, pos, plist);
 
+    // salida
     char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
     printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n",
            item.consoleId, bidder, brandStrOut,
@@ -228,29 +236,34 @@ void Award(int num,
     printf("********************\n");
     printf("%02d A: console %s\n", num, consoleId);
 
+    // validacion basica de parametros
     if (!consoleId) {
         printf("+ Error: Award not possible\n");
         return;
     }
 
+    // busqueda del item
     tPosL pos = findItem(consoleId, *plist);
     if (pos == LNULL) {
         printf("+ Error: Award not possible\n");
         return;
     }
 
+    // obtencion del item
     tItemL item = getItem(pos, *plist);
     if (isEmptyStack(item.bidStack)) {
         printf("+ Error: Award not possible\n");
         return;
     }
 
+    // obtencion de la puja ganadora
     tItemS winningBid = peek(item.bidStack);
     char *brandStrOut = (item.consoleBrand == nintendo) ? "nintendo" : "sega";
     printf("* Award: console %s bidder %s brand %s price %.2f\n",
            item.consoleId, winningBid.bidder, brandStrOut,
            winningBid.consolePrice);
 
+    // eliminacion del item
     deleteAtPosition(pos, plist);
 }
 
@@ -273,11 +286,13 @@ void InvalidateBids(int num,
     printf("********************\n");
     printf("%02d I\n", num);
 
+    // validacion basica de parametros
     if (isEmptyList(*plist)) {
         printf("+ Error: InvalidateBids not possible\n");
         return;
     }
 
+    // calculo de la media de pujas
     int totalBids = 0, count = 0;
     tPosL pos = first(*plist);
     while (pos != LNULL) {
@@ -290,6 +305,7 @@ void InvalidateBids(int num,
     float averageBids = (count > 0) ? (float)totalBids / count : 0;
     int invalidated = 0;
 
+    // invalidacion de pujas excesivas
     pos = first(*plist);
     while (pos != LNULL) {
         tItemL item = getItem(pos, *plist);
@@ -307,6 +323,7 @@ void InvalidateBids(int num,
         pos = next(pos, *plist);
     }
 
+    // salida
     if (invalidated == 0)
         printf("+ Error: InvalidateBids not possible\n");
 }
@@ -330,11 +347,13 @@ void Remove(int num,
     printf("********************\n");
     printf("%02d R\n", num);
 
+    // validacion basica de parametros
     if (isEmptyList(*plist)) {
         printf("+ Error: Remove not possible\n");
         return;
     }
 
+    // se eliminan las consolas cuyo bidCounter sea igual a cero
     int removed = 0;
     tPosL pos = first(*plist);
     while (pos != LNULL) {
@@ -351,6 +370,7 @@ void Remove(int num,
         pos = nextPos;
     }
 
+    // salida
     if (removed == 0)
         printf("+ Error: Remove not possible\n");
 }
@@ -374,6 +394,7 @@ void Stats(int num,
     printf("********************\n");
     printf("%02d S\n", num);
 
+    // validacion basica de parametros
     if (isEmptyList(*plist)) {
         printf("+ Error: Stats not possible\n");
         return;
@@ -418,7 +439,7 @@ void Stats(int num,
     printf("Nintendo  %8d %8.2f %8.2f\n", countN, sumN, avgN);
     printf("Sega      %8d %8.2f %8.2f\n", countS, sumS, avgS);
 
-    // top bid
+    // se obtiene el item y la puja correspondiente a la puja más significativa
     float maxIncrease = 0;
     tPosL topPos = LNULL;
     pos = first(*plist);
@@ -435,6 +456,7 @@ void Stats(int num,
         pos = next(pos, *plist);
     }
 
+    // salida
     if (topPos != LNULL) {
         tItemL topItem = getItem(topPos, *plist);
         tItemS topBid = peek(topItem.bidStack);
