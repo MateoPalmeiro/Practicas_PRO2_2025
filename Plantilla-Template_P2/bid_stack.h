@@ -18,7 +18,7 @@ GROUP: 4.3    DATE: 04/04/2025
 /*
  * createEmptyStack: inicializa una pila vacia.
  * pre: stack es un puntero a tStack.
- * post: se asigna stack->top = -1.
+ * post: se asigna stack->top = SNULL.
  * variables:
  *   - stack: tStack*, puntero a la pila que se va a inicializar.
  */
@@ -27,7 +27,7 @@ void createEmptyStack(tStack *stack);
 /*
  * isEmptyStack: determina si la pila esta vacia.
  * pre: la pila esta inicializada.
- * post: devuelve true si stack->top == -1, false en otro caso.
+ * post: devuelve true si stack->top == SNULL, false en otro caso.
  * variables:
  *   - stack: tStack, pila que se va a verificar.
  */
@@ -65,7 +65,7 @@ tItemS peek(tStack stack);
 /*
  * clearStack: vacia la pila de pujas.
  * pre: la pila esta inicializada.
- * post: se establece top = -1.
+ * post: se establece top = SNULL.
  * variables:
  *   - stack: tStack*, puntero a la pila que se va a vaciar.
  */
