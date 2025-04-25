@@ -15,60 +15,93 @@ GROUP: 4.3    DATE: 04/04/2025
 #define BID_STACK_SIZE 25  // tamano maximo de la pila de pujas
 #define SNULL -1           // posicion nula en la pila
 
+
 /*
- * createEmptyStack: inicializa una pila vacia.
- * pre: stack es un puntero a tStack.
- * post: se asigna stack->top = SNULL.
- * variables:
- *   - stack: tStack*, puntero a la pila que se va a inicializar.
+ * Objetivo: Inicializa una pila vacía.
+ * Entradas:
+ * - stack: tStack*, puntero a la pila que se va a inicializar.
+ * Salidas:
+ * - Ninguna.
+ * Precondiciones:
+ * - stack debe ser un puntero válido a tStack.
+ * Postcondiciones:
+ * - stack->top se asigna a SNULL.
  */
+
 void createEmptyStack(tStack *stack);
 
 /*
- * isEmptyStack: determina si la pila esta vacia.
- * pre: la pila esta inicializada.
- * post: devuelve true si stack->top == SNULL, false en otro caso.
- * variables:
- *   - stack: tStack, pila que se va a verificar.
+ * Objetivo: Determina si la pila está vacía.
+ * Entradas:
+ * - stack: tStack, pila que se va a verificar.
+ * Salidas:
+ * - true: si stack->top es SNULL.
+ * - false: en caso contrario.
+ * Precondiciones:
+ * - La pila debe estar inicializada.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 bool isEmptyStack(tStack stack);
 
 /*
- * push: inserta un elemento en la cima de la pila.
- * pre: la pila esta inicializada.
- * post: se inserta el elemento en la cima y se actualiza top.
- *       devuelve true si la operacion fue exitosa, false en caso contrario.
- * variables:
- *   - item: tItemS, elemento que se va a insertar.
- *   - stack: tStack*, puntero a la pila en la que se insertara el elemento.
+ * Objetivo: Inserta un elemento en la cima de la pila.
+ * Entradas:
+ * - item: tItemS, elemento que se va a insertar.
+ * - stack: tStack*, puntero a la pila en la que se insertará el elemento.
+ * Salidas:
+ * - true: si la operación fue exitosa.
+ * - false: si la pila está llena.
+ * Precondiciones:
+ * - La pila debe estar inicializada.
+ * Postcondiciones:
+ * - Ninguna
  */
+
 bool push(tItemS item, tStack *stack);
 
 /*
- * pop: elimina el elemento en la cima de la pila.
- * pre: la pila no esta vacia.
- * post: se elimina el elemento y se actualiza top.
- * variables:
- *   - stack: tStack*, puntero a la pila de la cual se eliminara el elemento.
+ * Objetivo: Elimina el elemento en la cima de la pila.
+ * Entradas:
+ * - stack: tStack*, puntero a la pila de la cual se eliminará el elemento.
+ * Salidas:
+ * - true: si la operación fue exitosa.
+ * - false: si la pila está vacía.
+ * Precondiciones:
+ * - La pila no debe estar vacía.
+ * Postcondiciones:
+ * - Ninguna
  */
+
 bool pop(tStack *stack);
 
 /*
- * peek: devuelve el elemento de la cima sin eliminarlo.
- * pre: la pila no esta vacia.
- * post: devuelve el tItemS en la cima.
- * variables:
- *   - stack: tStack, pila de la cual se obtendra el elemento en la cima.
+ * Objetivo: Devuelve el elemento de la cima sin eliminarlo.
+ * Entradas:
+ * - stack: tStack, pila de la cual se obtendrá el elemento en la cima.
+ * Salidas:
+ * - El elemento (tItemS) en la cima.
+ * Precondiciones:
+ * - La pila no debe estar vacía.
+ * Postcondiciones:
+ * - Ninguna.
  */
+
 tItemS peek(tStack stack);
 
 /*
- * clearStack: vacia la pila de pujas.
- * pre: la pila esta inicializada.
- * post: se establece top = SNULL.
- * variables:
- *   - stack: tStack*, puntero a la pila que se va a vaciar.
+ * Objetivo: Vacía la pila de pujas.
+ * Entradas:
+ * - stack: tStack*, puntero a la pila que se va a vaciar.
+ * Salidas:
+ * - Ninguna.
+ * Precondiciones:
+ * - La pila debe estar inicializada.
+ * Postcondiciones:
+ * - stack->top se establece a SNULL.
  */
+
 void clearStack(tStack *stack);
 
 #endif
