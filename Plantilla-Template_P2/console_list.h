@@ -110,31 +110,33 @@ tPosL next(tPosL pos, tList list);
 tPosL previous(tPosL pos, tList list);
 
 /*
- * Objetivo: Inserta un elemento en la lista de forma ordenada por consoleId.
+ * Objetivo: Inserta un elemento en la lista ordenada por consoleId,
+ *           rechazando duplicados.
  * Entradas:
- * - item: tItemL, elemento que se va a insertar.
- * - list: tList*, puntero a la lista en la que se insertará el elemento.
+ *   - item: tItemL, datos de la consola a insertar.
+ *   - list: tList*, puntero a la lista ordenada.
  * Salidas:
- * - true: si la inserción fue exitosa.
- * - false: en caso contrario.
+ *   - true: si la inserción fue exitosa.
+ *   - false: si ya existía esa consola o falla malloc.
  * Precondiciones:
- * - La lista debe estar inicializada.
+ *   - *list está inicializada (puede valer LNULL).
  * Postcondiciones:
- * - Las posiciones posteriores cambian de posición.
+ *   - Si retorna true, el nodo se añade en posición alfabética.
+ *   - Si retorna false, la lista no cambia.
  */
 bool insertItem(tItemL item, tList *list);
 
 /*
- * Objetivo: Elimina el nodo en la posición dada.
+ * Objetivo: Elimina el nodo en la posición indicada.
  * Entradas:
- * - pos: tPosL, posición del nodo que se va a eliminar.
- * - list: tList*, puntero a la lista de la cual se eliminará el nodo.
+ *   - pos:  tPosL, posición del nodo a eliminar.
+ *   - list: tList*, puntero a la lista.
  * Salidas:
- * - Ninguna.
+ *   - Ninguna.
  * Precondiciones:
- * - pos debe ser una posición válida.
+ *   - pos es una posición válida en *list.
  * Postcondiciones:
- * - Las posiciones posteriores cambian de posición.
+ *   - El nodo se libera y la lista se reencadena sin él.
  */
 void deleteAtPosition(tPosL pos, tList *list);
 
@@ -153,17 +155,17 @@ void deleteAtPosition(tPosL pos, tList *list);
 tItemL getItem(tPosL pos, tList list);
 
 /*
- * Objetivo: Actualiza el elemento en la posición dada.
+ * Objetivo: Sustituye el contenido completo del nodo en pos por item.
  * Entradas:
- * - item: tItemL, nuevo valor que se asignará al elemento.
- * - pos: tPosL, posición del elemento que se va a actualizar.
- * - list: tList*, puntero a la lista en la que se encuentra el elemento.
+ *   - item: tItemL, nuevo valor completo a asignar.
+ *   - pos:  tPosL, posición del nodo a actualizar.
+ *   - list: tList*, puntero a la lista (no usado).
  * Salidas:
- * - Ninguna.
+ *   - Ninguna.
  * Precondiciones:
- * - pos debe ser una posición válida.
+ *   - pos es una posición válida en *list.
  * Postcondiciones:
- * - Ninguna.
+ *   - pos->item queda reemplazado por item.
  */
 void updateItem(tItemL item, tPosL pos, tList *list);
 
