@@ -119,72 +119,101 @@ tPosL previous(tPosL pos, tList list) {
 }
 
 /*
-* Objetivo: Inserta un elemento en la lista de forma ordenada por consoleId.
-* Entradas:
-* - item: tItemL, elemento que se va a insertar.
-* - list: tList*, puntero a la lista en la que se insertará el elemento.
-* Salidas:
-* - true: si la inserción fue exitosa.
-* - false: en caso contrario.
-* Precondiciones:
-* - La lista debe estar inicializada.
-* Postcondiciones:
-* - Las posiciones posteriores cambian de posición
-*/
+ * Objetivo: Inserta un elemento en la lista ordenada por consoleId,
+ *           rechazando duplicados.
+ * Entradas:
+ *   - item: tItemL, datos de la consola a insertar.
+ *   - list: tList*, puntero a la lista ordenada.
+ * Salidas:
+ *   - true si la inserción fue exitosa.
+ *   - false si ya existía esa consola o falla malloc.
+ * Precondiciones:
+ *   - *list está inicializada (puede valer LNULL).
+ * Postcondiciones:
+ *   - Si retorna true, el nodo se añade en posición alfabética.
+ *   - Si retorna false, la lista no cambia.
+ */
 bool insertItem(tItemL item, tList *list) {
-    tNode *newNode = (tNode *) malloc(sizeof(tNode));
-    if (!newNode)
-        return false;
+    // No permitimos duplicados
+    for (tPosL p = *list; p != LNULL; p = p->next) {
+        if (strcmp(p->item.consoleId, item.consoleId) == 0)
+            return false;
+    }
+
+    tNode *newNode = malloc(sizeof(tNode));
+    if (!newNode) return false;
+
     newNode->item = item;
     newNode->next = LNULL;
 
-    if (*list == LNULL) {
-        *list = newNode;
-        return true;
-    }
-
-    if (strcmp(item.consoleId, (*list)->item.consoleId) < 0) {
+    // Caso lista vacía o insertar al frente
+    if (*list == LNULL ||
+        strcmp(item.consoleId, (*list)->item.consoleId) < 0) {
         newNode->next = *list;
         *list = newNode;
         return true;
     }
 
+    // Busca el nodo tras el cual insertar
     tPosL prev = *list;
-    while (prev->next != LNULL
-           && strcmp(prev->next->item.consoleId, item.consoleId) < 0) {
+    while (prev->next != LNULL &&
+           strcmp(prev->next->item.consoleId, item.consoleId) < 0) {
         prev = prev->next;
     }
 
+    // Inserción en medio o al final
     newNode->next = prev->next;
     prev->next    = newNode;
     return true;
 }
 
 /*
-* Objetivo: Elimina el nodo en la posición dada.
-* Entradas:
-* - pos: tPosL, posición del nodo que se va a eliminar.
-* - list: tList*, puntero a la lista de la cual se eliminará el nodo.
-* Salidas:
-* - Ninguna.
-* Precondiciones:
-* - pos debe ser una posición válida.
-* Postcondiciones:
-* - Las posiciones posteriores cambian de posición
-*/
+ * Objetivo: Elimina el nodo en la posición indicada.
+ * Entradas:
+ *   - pos:  tPosL, posición del nodo a eliminar.
+ *   - list: tList*, puntero a la lista.
+ * Salidas:
+ *   - Ninguna.
+ * Precondiciones:
+ *   - pos es una posición válida en *list.
+ * Postcondiciones:
+ *   - El nodo se libera y la lista se reencadena sin él.
+ */
 void deleteAtPosition(tPosL pos, tList *list) {
-    if (*list == LNULL || pos == LNULL)
-        return;
+    if (*list == LNULL || pos == LNULL) return;
+
+    // Eliminar la cabeza
     if (pos == *list) {
         *list = pos->next;
         free(pos);
         return;
     }
+
+    // Buscar el anterior y ajustar enlaces
     tPosL prev = previous(pos, *list);
     if (prev != LNULL) {
         prev->next = pos->next;
         free(pos);
     }
+}
+
+/*
+ * Objetivo: Sustituye el contenido del nodo en pos por item.
+ * Entradas:
+ *   - item: tItemL, nuevo valor completo a asignar.
+ *   - pos:  tPosL, posición del nodo a actualizar.
+ *   - list: tList*, puntero a la lista (no usado).
+ * Salidas:
+ *   - Ninguna.
+ * Precondiciones:
+ *   - pos es una posición válida en *list.
+ * Postcondiciones:
+ *   - pos->item queda reemplazado por item.
+ */
+void updateItem(tItemL item, tPosL pos, tList *list) {
+    (void) list;  // parámetro no usado
+    if (pos == LNULL) return;
+    pos->item = item;
 }
 
 /*
@@ -201,24 +230,6 @@ void deleteAtPosition(tPosL pos, tList *list) {
 */
 tItemL getItem(tPosL pos, tList list) {
     return pos->item;
-}
-
-/*
-* Objetivo: Actualiza el elemento en la posición dada.
-* Entradas:
-* - item: tItemL, nuevo valor que se asignará al elemento.
-* - pos: tPosL, posición del elemento que se va a actualizar.
-* - list: tList*, puntero a la lista en la que se encuentra el elemento.
-* Salidas:
-* - Ninguna.
-* Precondiciones:
-* - pos debe ser una posición válida.
-* Postcondiciones:
-* - Ninguna.
-*/
-void updateItem(tItemL item, tPosL pos, tList *list) {
-    if (pos != LNULL)
-        pos->item = item;
 }
 
 /*
